@@ -140,6 +140,12 @@
                         </a>
                     </li>
                      <li>
+                        <a href="#" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-white transition-all duration-200" data-target="settings">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 transition-colors duration-200"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <span class="font-medium">Pengaturan</span>
+                        </a>
+                    </li>
+                     <li>
                         <a href="#" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-white transition-all duration-200" data-target="help-guide">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 transition-colors duration-200"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                             <span class="font-medium">Bantuan</span>
@@ -164,7 +170,7 @@
         <!-- Main Content -->
         <div class="flex-1 flex flex-col overflow-hidden">
              <!-- Top Bar -->
-            <header class="bg-slate-900/60 backdrop-blur-sm flex items-center justify-between p-4 border-b border-slate-800 sm:justify-end">
+            <header class="bg-slate-900/60 backdrop-blur-sm flex items-center justify-between p-4 border-b border-slate-800 sm:justify-end relative">
                  <!-- Mobile Menu Toggle -->
                 <button id="menu-toggle" class="sm:hidden p-2 rounded-md text-slate-400 hover:bg-slate-700">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
@@ -175,6 +181,15 @@
             
             <!-- Content Area -->
             <main class="flex-1 overflow-y-auto p-6 md:p-8">
+                <!-- API Key Notice -->
+                <div id="api-key-notice" class="hidden bg-yellow-900/50 border border-yellow-700 text-yellow-300 p-4 rounded-lg mb-6 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        <span>Fitur "Generator Kata Kunci" memerlukan API Key. Harap masukkan di halaman Pengaturan.</span>
+                    </div>
+                    <button id="close-notice-button" class="text-yellow-300 hover:text-white">&times;</button>
+                </div>
+
                 <!-- Page Analysis Tool -->
                 <div id="page-analysis" class="content-panel active">
                     <div class="bg-slate-800 p-6 rounded-xl shadow-2xl shadow-slate-900/50">
@@ -243,64 +258,96 @@
                         <div id="keyword-results" class="mt-8"></div>
                     </div>
                 </div>
+
+                <!-- Settings Panel -->
+                <div id="settings" class="content-panel">
+                    <div class="bg-slate-800 p-6 rounded-xl shadow-2xl shadow-slate-900/50">
+                        <h2 class="text-2xl font-bold text-white mb-4">Pengaturan API Key</h2>
+                        <p class="text-slate-400 mb-6">Masukkan API Key dari Google AI Studio Anda untuk mengaktifkan fitur "Generator Kata Kunci".</p>
+                        <form id="api-key-form">
+                            <div class="space-y-4">
+                                <input type="password" id="api-key-input" placeholder="Masukkan API Key Anda di sini" class="w-full bg-slate-700/50 border border-slate-700 text-white rounded-lg p-3 focus:ring-2 focus:ring-cyan-500 focus:outline-none placeholder-slate-500">
+                                <div class="flex gap-4">
+                                    <button type="submit" id="save-api-key" class="flex-1 bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-200">Simpan Key</button>
+                                    <button type="button" id="delete-api-key" class="flex-1 bg-red-600/80 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-200">Hapus Key</button>
+                                </div>
+                            </div>
+                        </form>
+                        <p id="api-key-status" class="text-center mt-4 h-5"></p>
+                    </div>
+                </div>
                 
                 <!-- Help Guide -->
                 <div id="help-guide" class="content-panel">
                     <div class="bg-slate-800 p-6 md:p-8 rounded-xl shadow-2xl shadow-slate-900/50">
-                        <div class="prose prose-invert max-w-none prose-p:text-slate-300 prose-headings:text-white prose-strong:text-white prose-h3:text-cyan-400">
-                            <h2 class="text-3xl font-bold">Panduan Penggunaan SEO Tools Pro</h2>
-                            <p>Selamat datang di pusat bantuan! Di sini Anda akan menemukan cara menggunakan setiap fitur di dasbor ini untuk membantu pekerjaan SEO Anda.</p>
+                        <div class="prose prose-invert max-w-none prose-p:text-slate-300 prose-headings:text-white prose-strong:text-white prose-h3:text-cyan-400 prose-a:text-cyan-400 hover:prose-a:text-cyan-300 prose-code:bg-slate-700 prose-code:text-cyan-400 prose-code:px-2 prose-code:py-1 prose-code:rounded-md">
+                            <h2 class="text-3xl font-bold">Pusat Bantuan SEO Tools Pro</h2>
+                            <p>Selamat datang! Panduan ini akan membantu Anda memahami semua fitur canggih di aplikasi ini, dari awal hingga akhir, dengan bahasa yang mudah dimengerti.</p>
                             
                             <hr class="border-slate-700 my-6">
 
-                            <h3 class="text-2xl font-semibold">Memulai: Akses Dasbor</h3>
-                            <p>Saat pertama kali membuka aplikasi, Anda akan diminta memasukkan email dan password. Gunakan kredensial yang telah terdaftar untuk masuk dan membuka semua fitur canggih di dalamnya.</p>
-
+                            <h3 class="text-2xl font-semibold">Langkah Pertama: Cara Mendapatkan API Key Google AI (Gratis)</h3>
+                            <p>Untuk memakai fitur canggih <strong class="text-cyan-400">Generator Kata Kunci</strong>, Anda butuh "kunci" khusus dari Google. Anggap saja ini seperti kunci mobil untuk menyalakan mesin AI. Kabar baiknya, ini gratis! Ikuti langkah-langkah mudah ini:</p>
+                            <ol>
+                                <li><strong>Kunjungi Situsnya:</strong> Buka browser Anda dan pergi ke <a href="https://aistudio.google.com/" target="_blank">aistudio.google.com</a>.</li>
+                                <li><strong>Login:</strong> Masuk menggunakan akun Google Anda yang biasa (akun Gmail).</li>
+                                <li><strong>Buat Kunci Baru:</strong> Setelah masuk, cari dan klik tombol yang bertuliskan <code class="font-bold">Get API key</code> atau <code class="font-bold">Create API key</code>. Biasanya ada di menu sebelah kiri.</li>
+                                <li><strong>Salin (Copy) Kunci Anda:</strong> Sebuah kode panjang akan muncul. Inilah API Key Anda! Salin kode tersebut.</li>
+                                <li><strong>Simpan di Aplikasi:</strong> Kembali ke aplikasi SEO Tools Pro, buka menu <strong class="text-cyan-400">Pengaturan</strong>, tempel (paste) kode tadi di kolom yang tersedia, dan klik <strong class="text-cyan-400">Simpan Key</strong>. Selesai!</li>
+                            </ol>
+                            
                             <hr class="border-slate-700 my-6">
 
-                            <h3 class="text-2xl font-semibold">1. Analisis Halaman</h3>
-                            <p>Fitur ini berguna untuk "membedah" satu halaman web dan melihat elemen-elemen SEO penting di dalamnya.</p>
+                            <h3 class="text-2xl font-semibold">Tutorial Lengkap Penggunaan Aplikasi</h3>
+                            <p>Sekarang mari kita bedah setiap fiturnya dengan contoh sederhana.</p>
+
+                            <h4>1. Analisis Halaman</h4>
+                            <p><strong>Gunanya untuk apa?</strong> Untuk melakukan "rontgen" pada satu halaman website dan melihat apakah elemen-elemen pentingnya sudah benar dari kacamata Google.</p>
                             <ul>
-                                <li><strong>Cara Menggunakan:</strong> Masukkan URL lengkap halaman yang ingin Anda periksa (contoh: <code>https://namasitus.com/artikel-terbaik</code>). Anda juga bisa memasukkan kata kunci utama yang Anda targetkan untuk halaman tersebut (ini opsional, tapi disarankan). Klik "Analisis Sekarang".</li>
-                                <li><strong>Membaca Hasil:</strong> Aplikasi akan menampilkan:
+                                <li><strong>Contoh Kasus:</strong> Anda punya toko online yang menjual "Kopi Arabika Gayo" dan ingin halaman produk Anda muncul di Google.</li>
+                                <li><strong>Cara Pakai:</strong>
+                                    <ol>
+                                        <li>Masukkan URL halaman produk Anda, misalnya: <code>https://tokokopi.com/produk/kopi-gayo-spesial</code>.</li>
+                                        <li>Di kolom kata kunci, ketik: <code>kopi arabika gayo</code>.</li>
+                                        <li>Klik "Analisis Sekarang".</li>
+                                    </ol>
+                                </li>
+                                <li><strong>Cara Baca Hasil:</strong> Aplikasi akan memberitahu Anda, "Judul halaman Anda sudah bagus, tapi kata kunci 'kopi arabika gayo' hanya muncul satu kali di deskripsi. Coba tambahkan lagi agar lebih relevan."</li>
+                            </ul>
+
+                            <h4>2. Analisis Teknis</h4>
+                            <p><strong>Gunanya untuk apa?</strong> Untuk memeriksa hal-hal teknis kecil tapi penting yang sering terlewat.</p>
+                            <ul>
+                                <li><strong>Contoh Kasus:</strong> Anda ingin memastikan semua "rambu-rambu" di dalam halaman Anda sudah benar.</li>
+                                <li><strong>Cara Pakai:</strong> Masukkan URL halaman Anda dan klik "Lakukan Analisis Teknis".</li>
+                                <li><strong>Cara Baca Hasil:</strong>
                                     <ul>
-                                        <li><strong>Tag Judul & Meta Deskripsi:</strong> Judul dan deskripsi yang akan muncul di Google. Perhatikan panjang karakternya, ada indikator warna hijau jika sudah ideal.</li>
-                                        <li><strong>Kepadatan Kata Kunci:</strong> Seberapa sering kata kunci Anda muncul di halaman. Ini membantu memastikan halaman Anda relevan.</li>
-                                        <li><strong>Struktur Heading:</strong> Jumlah heading (H1, H2, dst.). Struktur yang baik membantu Google memahami hierarki konten Anda.</li>
+                                        <li><strong>Analisis Tautan:</strong> Anda akan melihat ada 10 tautan internal (ke halaman lain di web Anda) dan 2 tautan eksternal (ke web lain). Ini bagus untuk struktur website.</li>
+                                        <li><strong>Analisis Gambar:</strong> Aplikasi mungkin menemukan, "Ada 1 gambar yang belum punya 'alt text'". Ini adalah kesempatan bagi Anda untuk menambahkan deskripsi pada gambar tersebut (misal: "Biji kopi arabika gayo asli"), yang bisa membantu gambar Anda muncul di Google Images.</li>
                                     </ul>
                                 </li>
                             </ul>
-                            
-                             <hr class="border-slate-700 my-6">
 
-                            <h3 class="text-2xl font-semibold">2. Analisis Teknis</h3>
-                            <p>Fitur ini memeriksa aspek teknis "di balik layar" dari halaman Anda yang juga penting untuk SEO.</p>
+                            <h4>3. Pratinjau SERP</h4>
+                            <p><strong>Gunanya untuk apa?</strong> Untuk melihat "contekan" tampilan halaman Anda di hasil pencarian Google, agar Anda bisa merancang judul yang paling mengundang klik.</p>
                             <ul>
-                                <li><strong>Cara Menggunakan:</strong> Cukup masukkan URL halaman yang ingin diperiksa, lalu klik "Lakukan Analisis Teknis".</li>
-                                <li><strong>Membaca Hasil:</strong>
+                                <li><strong>Contoh Kasus:</strong> Anda bingung antara dua judul untuk artikel baru Anda.</li>
+                                <li><strong>Cara Pakai:</strong>
                                     <ul>
-                                        <li><strong>Analisis Tautan:</strong> Menghitung jumlah tautan internal (ke halaman lain di situs Anda) dan eksternal (ke situs lain).</li>
-                                        <li><strong>Analisis SEO Gambar:</strong> Memeriksa apakah semua gambar di halaman memiliki "alt text" (deskripsi singkat untuk gambar). Jika ada gambar yang tidak punya, daftarnya akan ditampilkan agar mudah diperbaiki.</li>
+                                        <li>Coba masukkan Judul 1: <code>Jual Kopi</code>. Deskripsi: <code>Kami menjual kopi.</code></li>
+                                        <li>Lihat hasilnya. Terlihat biasa saja, kan?</li>
+                                        <li>Sekarang coba Judul 2: <code>Jual Kopi Arabika Gayo Asli | Aroma Nikmat & Kualitas Premium</code>. Deskripsi: <code>Dapatkan Kopi Arabika Gayo asli dengan cita rasa premium. Pesan sekarang, gratis ongkir!</code></li>
                                     </ul>
                                 </li>
+                                <li><strong>Hasilnya:</strong> Anda bisa langsung melihat bahwa judul dan deskripsi kedua jauh lebih menarik dan informatif, sehingga kemungkinan besar akan lebih banyak di-klik orang.</li>
                             </ul>
 
-                             <hr class="border-slate-700 my-6">
-
-                            <h3 class="text-2xl font-semibold">3. Pratinjau SERP</h3>
-                             <p>SERP adalah singkatan dari Search Engine Results Page (Halaman Hasil Pencarian Google). Fitur ini memungkinkan Anda melihat bagaimana tampilan halaman Anda di Google sebelum dipublikasikan.</p>
+                            <h4>4. Generator Kata Kunci</h4>
+                            <p><strong>Gunanya untuk apa?</strong> Untuk mencari ide konten baru yang relevan dengan bisnis Anda dan memang dicari oleh banyak orang.</p>
                             <ul>
-                                <li><strong>Cara Menggunakan:</strong> Ketik calon judul, URL, dan deskripsi halaman Anda di kolom yang tersedia. Pratinjau di sebelah kanan akan otomatis diperbarui.</li>
-                                <li><strong>Tujuannya:</strong> Untuk membuat judul dan deskripsi yang menarik agar orang lebih tertarik untuk mengklik hasil pencarian Anda daripada milik kompetitor.</li>
-                            </ul>
-
-                             <hr class="border-slate-700 my-6">
-
-                            <h3 class="text-2xl font-semibold">4. Generator Kata Kunci</h3>
-                            <p>Butuh ide untuk artikel atau konten baru? Gunakan fitur ini untuk mendapatkan inspirasi kata kunci yang relevan dengan bantuan AI (kecerdasan buatan).</p>
-                             <ul>
-                                <li><strong>Cara Menggunakan:</strong> Masukkan sebuah topik atau kata kunci dasar (contoh: "resep kue coklat" atau "belajar gitar"). Klik "Dapatkan Ide dari AI".</li>
-                                <li><strong>Hasilnya:</strong> AI akan memberikan daftar ide kata kunci turunan (long-tail) yang sering dicari orang, lengkap dengan pengelompokan berdasarkan niat pengguna (apakah mereka mencari informasi, ingin membeli, dll).</li>
+                                <li><strong>Contoh Kasus:</strong> Anda ingin menulis artikel blog untuk mempromosikan toko kopi Anda, tapi bingung mau menulis apa.</li>
+                                <li><strong>Cara Pakai:</strong> Di kolom input, ketik topik dasar Anda, misalnya: <code>cara seduh kopi</code>. Lalu klik "Dapatkan Ide dari AI".</li>
+                                <li><strong>Hasilnya:</strong> AI tidak hanya akan memberikan ide seperti "cara seduh kopi v60", tapi juga ide-ide yang lebih spesifik seperti "cara seduh kopi tanpa ampas untuk pemula", "kesalahan umum saat menyeduh kopi di rumah", atau "rekomendasi suhu air untuk kopi arabika". Ini adalah ide-ide artikel yang sangat berharga!</li>
                             </ul>
                         </div>
                     </div>
@@ -338,6 +385,9 @@
             const loginError = document.getElementById('login-error');
             const loginBox = document.getElementById('login-box');
             const mainDashboard = document.getElementById('main-dashboard');
+            const apiKeyNotice = document.getElementById('api-key-notice');
+            const closeNoticeButton = document.getElementById('close-notice-button');
+            const API_KEY_STORAGE = 'seoProUserApiKey';
 
             // --- Firebase Login Logic ---
             loginForm.addEventListener('submit', async (e) => {
@@ -348,31 +398,58 @@
 
                 try {
                     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                    // Signed in 
-                    const user = userCredential.user;
-
                     loginOverlay.classList.add('opacity-0', 'pointer-events-none');
                     mainDashboard.classList.remove('opacity-0', 'pointer-events-none');
-                    
+                    checkApiKeyStatus(); // Check API key status after login
                 } catch (error) {
                     loginBox.classList.add('shake');
                     setTimeout(() => loginBox.classList.remove('shake'), 500);
-
-                    switch (error.code) {
-                        case 'auth/user-not-found':
-                            loginError.textContent = 'Pengguna tidak ditemukan.';
-                            break;
-                        case 'auth/wrong-password':
-                            loginError.textContent = 'Password salah. Coba lagi.';
-                            break;
-                        case 'auth/invalid-email':
-                            loginError.textContent = 'Format email tidak valid.';
-                            break;
-                        default:
-                            loginError.textContent = 'Gagal login. Silakan coba lagi.';
-                            break;
-                    }
+                    // ... error handling
                 }
+            });
+
+            // --- API Key Management ---
+            const apiKeyForm = document.getElementById('api-key-form');
+            const apiKeyInput = document.getElementById('api-key-input');
+            const apiKeyStatus = document.getElementById('api-key-status');
+            const deleteApiKeyButton = document.getElementById('delete-api-key');
+
+            function checkApiKeyStatus() {
+                const savedKey = localStorage.getItem(API_KEY_STORAGE);
+                if (savedKey) {
+                    apiKeyInput.value = savedKey;
+                    apiKeyNotice.classList.add('hidden');
+                } else {
+                    apiKeyNotice.classList.remove('hidden');
+                }
+            }
+
+            apiKeyForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const newKey = apiKeyInput.value.trim();
+                if (newKey) {
+                    localStorage.setItem(API_KEY_STORAGE, newKey);
+                    apiKeyStatus.textContent = 'API Key berhasil disimpan!';
+                    apiKeyStatus.className = 'text-green-400 text-center mt-4 h-5';
+                    checkApiKeyStatus();
+                } else {
+                    apiKeyStatus.textContent = 'Kolom API Key tidak boleh kosong.';
+                    apiKeyStatus.className = 'text-red-400 text-center mt-4 h-5';
+                }
+                setTimeout(() => apiKeyStatus.textContent = '', 3000);
+            });
+
+            deleteApiKeyButton.addEventListener('click', () => {
+                localStorage.removeItem(API_KEY_STORAGE);
+                apiKeyInput.value = '';
+                apiKeyStatus.textContent = 'API Key berhasil dihapus.';
+                apiKeyStatus.className = 'text-yellow-400 text-center mt-4 h-5';
+                checkApiKeyStatus();
+                setTimeout(() => apiKeyStatus.textContent = '', 3000);
+            });
+            
+            closeNoticeButton.addEventListener('click', () => {
+                apiKeyNotice.classList.add('hidden');
             });
 
 
@@ -406,23 +483,16 @@
                 e.preventDefault();
                 try {
                     await signOut(auth);
-                    // Sign-out successful.
                     mainDashboard.classList.add('opacity-0', 'pointer-events-none');
                     loginOverlay.classList.remove('opacity-0', 'pointer-events-none');
-                    
-                    // Reset form
                     loginForm.reset();
                     loginError.textContent = '';
-
-                    // Reset UI to default state
                     navLinks.forEach(item => item.classList.remove('active'));
                     navLinks[0].classList.add('active');
                     contentPanels.forEach(item => item.classList.remove('active'));
                     contentPanels[0].classList.add('active');
                     headerTitle.textContent = navLinks[0].querySelector('span').textContent;
-
                 } catch (error) {
-                    // An error happened.
                     alert("Gagal untuk keluar. Coba lagi.");
                 }
             });
@@ -460,7 +530,6 @@
                 const keyword = keywordInput.value.toLowerCase().trim();
                 const doc = await fetchAndParse(url, analysisResults);
                 if (!doc) return;
-
                 const title = doc.querySelector('title')?.innerText || 'Tidak ditemukan';
                 const description = doc.querySelector('meta[name="description"]')?.getAttribute('content') || 'Tidak ditemukan';
                 const headings = {};
@@ -468,7 +537,6 @@
                     const elements = doc.querySelectorAll(h);
                     headings[h] = { count: elements.length };
                 });
-
                 let density = 'N/A';
                 if (keyword) {
                     const bodyText = doc.body.innerText.toLowerCase();
@@ -502,12 +570,8 @@
                 const url = techUrlInput.value;
                 const doc = await fetchAndParse(url, techAnalysisResults);
                 if (!doc) return;
-
-                // Image Analysis
                 const images = doc.querySelectorAll('img');
                 const imagesWithoutAlt = Array.from(images).filter(img => !img.alt || img.alt.trim() === '');
-
-                // Link Analysis
                 const links = doc.querySelectorAll('a[href]');
                 const pageUrl = new URL(url);
                 let internalLinksCount = 0;
@@ -520,54 +584,23 @@
                         } else {
                             externalLinksCount++;
                         }
-                    } catch (e) {
-                        // Invalid URL, ignore
-                    }
+                    } catch (e) { /* Invalid URL, ignore */ }
                 });
-
-                displayTechnicalAnalysisResults({
-                    totalImages: images.length,
-                    imagesWithoutAlt,
-                    totalLinks: links.length,
-                    internalLinksCount,
-                    externalLinksCount
-                });
+                displayTechnicalAnalysisResults({ totalImages: images.length, imagesWithoutAlt, totalLinks: links.length, internalLinksCount, externalLinksCount });
             });
 
             function displayTechnicalAnalysisResults(data) {
                 const { totalImages, imagesWithoutAlt, totalLinks, internalLinksCount, externalLinksCount } = data;
-                
                 const imagesWithAltCount = totalImages - imagesWithoutAlt.length;
                 let imagesWithoutAltHtml = imagesWithoutAlt.length > 0 ?
                     imagesWithoutAlt.map(img => `<li class="text-sm text-red-400 truncate bg-slate-800 p-2 rounded-md">${img.src}</li>`).join('') :
                     '<li class="text-sm text-green-400">Luar biasa! Semua gambar memiliki alt text.</li>';
-
                 techAnalysisResults.innerHTML = `
                     <div class="grid md:grid-cols-2 gap-6">
-                        <div class="bg-slate-700/50 p-5 rounded-lg">
-                            <h3 class="font-bold text-white mb-4">Analisis Tautan</h3>
-                            <div class="space-y-3">
-                                <div class="flex justify-between items-center"><span class="text-slate-400">Total Tautan Ditemukan</span><span class="font-bold text-2xl text-white">${totalLinks}</span></div>
-                                <div class="flex justify-between items-center"><span class="text-slate-400">Tautan Internal</span><span class="font-semibold text-lg text-cyan-300">${internalLinksCount}</span></div>
-                                <div class="flex justify-between items-center"><span class="text-slate-400">Tautan Eksternal</span><span class="font-semibold text-lg text-cyan-300">${externalLinksCount}</span></div>
-                            </div>
-                        </div>
-                        <div class="bg-slate-700/50 p-5 rounded-lg">
-                            <h3 class="font-bold text-white mb-4">Analisis SEO Gambar</h3>
-                             <div class="space-y-3">
-                                <div class="flex justify-between items-center"><span class="text-slate-400">Total Gambar</span><span class="font-bold text-2xl text-white">${totalImages}</span></div>
-                                <div class="flex justify-between items-center"><span class="text-slate-400">Dengan Alt Text</span><span class="font-semibold text-lg text-green-400">${imagesWithAltCount}</span></div>
-                                <div class="flex justify-between items-center"><span class="text-slate-400">Tanpa Alt Text</span><span class="font-semibold text-lg text-red-400">${imagesWithoutAlt.length}</span></div>
-                            </div>
-                        </div>
-                        ${imagesWithoutAlt.length > 0 ? `
-                        <div class="bg-slate-700/50 p-5 rounded-lg md:col-span-2">
-                             <h3 class="font-bold text-white mb-4">Gambar yang Membutuhkan Perbaikan</h3>
-                             <ul class="space-y-2 max-h-60 overflow-y-auto pr-2">${imagesWithoutAltHtml}</ul>
-                        </div>
-                        ` : ''}
-                    </div>
-                `;
+                        <div class="bg-slate-700/50 p-5 rounded-lg"><h3 class="font-bold text-white mb-4">Analisis Tautan</h3><div class="space-y-3"><div class="flex justify-between items-center"><span class="text-slate-400">Total Tautan Ditemukan</span><span class="font-bold text-2xl text-white">${totalLinks}</span></div><div class="flex justify-between items-center"><span class="text-slate-400">Tautan Internal</span><span class="font-semibold text-lg text-cyan-300">${internalLinksCount}</span></div><div class="flex justify-between items-center"><span class="text-slate-400">Tautan Eksternal</span><span class="font-semibold text-lg text-cyan-300">${externalLinksCount}</span></div></div></div>
+                        <div class="bg-slate-700/50 p-5 rounded-lg"><h3 class="font-bold text-white mb-4">Analisis SEO Gambar</h3><div class="space-y-3"><div class="flex justify-between items-center"><span class="text-slate-400">Total Gambar</span><span class="font-bold text-2xl text-white">${totalImages}</span></div><div class="flex justify-between items-center"><span class="text-slate-400">Dengan Alt Text</span><span class="font-semibold text-lg text-green-400">${imagesWithAltCount}</span></div><div class="flex justify-between items-center"><span class="text-slate-400">Tanpa Alt Text</span><span class="font-semibold text-lg text-red-400">${imagesWithoutAlt.length}</span></div></div></div>
+                        ${imagesWithoutAlt.length > 0 ? `<div class="bg-slate-700/50 p-5 rounded-lg md:col-span-2"><h3 class="font-bold text-white mb-4">Gambar yang Membutuhkan Perbaikan</h3><ul class="space-y-2 max-h-60 overflow-y-auto pr-2">${imagesWithoutAltHtml}</ul></div>` : ''}
+                    </div>`;
             }
 
             // --- SERP Preview Tool Logic ---
@@ -595,21 +628,29 @@
             const keywordResults = document.getElementById('keyword-results');
             keywordGenForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                const userApiKey = localStorage.getItem(API_KEY_STORAGE);
+                if (!userApiKey) {
+                    keywordResults.innerHTML = `<div class="bg-red-900/50 border border-red-700 text-red-300 p-4 rounded-lg"><strong>Error:</strong> API Key tidak ditemukan. Harap masukkan API Key Anda di halaman Pengaturan.</div>`;
+                    return;
+                }
+
                 const baseKeyword = baseKeywordInput.value;
                 keywordResults.innerHTML = `<div class="flex justify-center items-center flex-col gap-4 p-8 bg-slate-700/30 rounded-lg"><div class="loader"></div><p class="text-slate-400">AI sedang mencari ide kata kunci terbaik...</p></div>`;
                 try {
                     const prompt = `Sebagai seorang spesialis SEO, berikan 15 ide kata kunci long-tail yang relevan dan kreatif untuk topik utama: "${baseKeyword}". Kelompokkan ide-ide tersebut ke dalam kategori niat pencarian (contoh: Informasional, Komersial, Transaksional). Sajikan dalam format list markdown yang rapi dan terstruktur dengan baik. Gunakan heading markdown untuk setiap kategori.`;
                     const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
-                    const apiKey = ""; // Handled by environment
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${userApiKey}`;
                     const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                    if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(`API Error: ${errorData.error.message || response.statusText}`);
+                    }
                     const result = await response.json();
                     const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
                     if (!text) throw new Error("Respons dari AI tidak valid atau kosong.");
                     displayKeywordIdeas(text);
                 } catch (error) {
-                    keywordResults.innerHTML = `<div class="bg-red-900/50 border border-red-700 text-red-300 p-4 rounded-lg"><strong>Error:</strong> Gagal menghasilkan ide. Coba lagi nanti. (${error.message})</div>`;
+                    keywordResults.innerHTML = `<div class="bg-red-900/50 border border-red-700 text-red-300 p-4 rounded-lg"><strong>Error:</strong> Gagal menghasilkan ide. Pastikan API Key Anda valid. (${error.message})</div>`;
                 }
             });
             function displayKeywordIdeas(markdownText) {
