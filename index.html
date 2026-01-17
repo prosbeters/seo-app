@@ -3,995 +3,471 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dasbor SEO Tools Pro</title>
+    <title>SEO Spesialis - Strategy 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Library untuk PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --gold: #D4AF37;
+            --dark: #0A0A0A;
+        }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* slate-900 */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--dark);
+            color: #F8FAFC;
+            min-height: 100vh;
+            line-height: 1.8;
+            overflow-x: hidden;
         }
-        .content-panel {
-            display: none;
+        .text-justify {
+            text-align: justify;
+            text-justify: inter-word;
         }
-        .content-panel.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
+        .gold-text {
+            color: var(--gold);
         }
-        .nav-link.active {
-            background-color: #0891b2; /* cyan-600 */
-            color: white;
-            box-shadow: 0 4px 14px 0 rgba(8, 145, 178, 0.3);
-        }
-        .nav-link.active svg {
-            color: white;
-        }
-        .loader {
-            border: 4px solid #475569; /* slate-600 */
-            border-top: 4px solid #06b6d4; /* cyan-500 */
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        #login-overlay {
-            transition: opacity 0.5s ease-in-out;
-        }
-        .shake {
-            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-        }
-        
-        /* PDF Specific Styles - Invisible on screen but used for generation */
-        #pdf-template {
-            position: fixed;
-            left: -9999px;
-            top: 0;
-            width: 210mm; /* A4 width */
-            min-height: 297mm;
-            background-color: white;
-            color: #1e293b; /* slate-800 */
-            font-family: 'Inter', sans-serif;
-            padding: 40px;
-            box-sizing: border-box;
-        }
-        .pdf-header {
-            border-bottom: 2px solid #0891b2;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .pdf-logo-text {
-            font-size: 24px;
+        .btn-luxury {
+            background-color: var(--gold);
+            color: #000;
             font-weight: 800;
-            color: #0f172a;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
         }
-        .pdf-meta {
-            font-size: 12px;
-            color: #64748b;
-            text-align: right;
+        .btn-luxury:hover:not(:disabled) {
+            filter: brightness(1.2);
+            transform: translateY(-1px);
         }
-        .pdf-section {
-            margin-bottom: 30px;
-        }
-        .pdf-section-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #0891b2;
+        .btn-outline {
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            color: var(--gold);
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 15px;
-            border-left: 4px solid #0891b2;
-            padding-left: 10px;
+            transition: all 0.3s ease;
         }
-        .pdf-table {
+        .btn-outline:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        .bar-bg {
+            background: rgba(255, 255, 255, 0.05);
+            height: 6px;
+            border-radius: 3px;
             width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
+            overflow: hidden;
+            margin-top: 8px;
         }
-        .pdf-table td {
-            padding: 10px;
-            border-bottom: 1px solid #e2e8f0;
-            vertical-align: top;
+        .bar-fill {
+            height: 100%;
+            background-color: var(--gold);
+            width: 0%;
+            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .pdf-label {
-            font-weight: 600;
-            width: 140px;
-            color: #475569;
+        .premium-input {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 1.25rem;
+            width: 100%;
+            outline: none;
+            border-radius: 8px;
+            transition: border-color 0.3s;
         }
-        .pdf-footer {
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid #e2e8f0;
-            text-align: center;
-            font-size: 12px;
-            color: #94a3b8;
+        .premium-input:focus {
+            border-color: var(--gold);
         }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        select option, select optgroup {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .prose h2 {
+            color: white;
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--gold);
+            padding-left: 1.5rem;
+        }
+        .prose h3 {
+            color: var(--gold);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .prose p {
+            margin-bottom: 1.5rem;
+            color: #CBD5E1;
+            text-align: justify;
+        }
+        .prose strong {
+            color: var(--gold);
+        }
+        .prose ul {
+            margin-bottom: 2.5rem;
+        }
+        .prose li {
+            margin-bottom: 1rem;
+            list-style-type: none;
+            padding-left: 2rem;
+            position: relative;
+            text-align: justify;
+        }
+        .prose li::before {
+            content: '⬥';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes shake {
-          10%, 90% { transform: translate3d(-1px, 0, 0); }
-          20%, 80% { transform: translate3d(2px, 0, 0); }
-          30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-          40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
-        /* Custom scrollbar for a polished look */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1e293b; /* slate-800 */
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #475569; /* slate-600 */
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #64748b; /* slate-500 */
-        }
     </style>
 </head>
-<body class="text-slate-300">
+<body class="antialiased">
 
-    <!-- Hidden PDF Template Structure -->
-    <div id="pdf-template">
-        <div class="pdf-header">
-            <div class="pdf-logo-text">SEO Tools Pro</div>
-            <div class="pdf-meta">
-                <p>Laporan Audit SEO</p>
-                <p id="pdf-date">Tanggal: -</p>
+    <!-- LOGIN SECTION -->
+    <div id="loginSection" class="min-h-screen flex items-center justify-center p-6 bg-radial from-[#1a1a1a] to-black">
+        <div class="max-w-md w-full space-y-8 p-10 rounded-2xl bg-white/[0.02] border border-white/[0.05] backdrop-blur-xl shadow-2xl fade-in text-center">
+            <div>
+                <h1 class="text-4xl font-black tracking-tighter mb-2 uppercase">
+                    SEO <span class="gold-text">SPESIALIS</span>
+                </h1>
+                <p class="text-gray-500 text-sm uppercase tracking-[0.3em] font-light">Otoritas Akses Eksklusif</p>
             </div>
-        </div>
-        
-        <div class="pdf-section">
-            <div class="pdf-section-title">Informasi Target</div>
-            <table class="pdf-table">
-                <tr>
-                    <td class="pdf-label">URL Target:</td>
-                    <td id="pdf-target-url" class="font-mono text-sm">-</td>
-                </tr>
-                <tr>
-                    <td class="pdf-label">Kata Kunci:</td>
-                    <td id="pdf-target-keyword" class="font-bold">-</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="pdf-section">
-            <div class="pdf-section-title">Analisis On-Page</div>
-            <table class="pdf-table">
-                <tr>
-                    <td class="pdf-label">Judul Halaman:</td>
-                    <td id="pdf-page-title">-</td>
-                </tr>
-                <tr>
-                    <td class="pdf-label">Meta Deskripsi:</td>
-                    <td id="pdf-page-desc">-</td>
-                </tr>
-                <tr>
-                    <td class="pdf-label">H1 Utama:</td>
-                    <td id="pdf-page-h1">-</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="pdf-section">
-            <div class="pdf-section-title">Audit Konten Cerdas (AI)</div>
-            <div id="pdf-ai-content" class="prose prose-slate max-w-none text-sm">
-                <!-- AI Content will be injected here -->
-                <p class="text-gray-400 italic">Belum ada data analisis.</p>
-            </div>
-        </div>
-
-        <div class="pdf-footer">
-            Dibuat secara otomatis menggunakan SEO Tools Pro Workstation Edition.<br>
-            &copy; 2025 ProsBe.
-        </div>
-    </div>
-
-    <!-- Login Overlay -->
-    <div id="login-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/80 backdrop-blur-sm">
-        <div id="login-box" class="bg-slate-800 p-8 rounded-xl shadow-2xl w-full max-w-sm">
-            <!-- Logo -->
-            <div class="w-20 h-20 mx-auto mb-6">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 22S19 18.5 19 12V5L12 2L5 5V12C5 18.5 12 22 12 22Z" class="fill-cyan-500/10 stroke-cyan-500" stroke-width="1.5"></path>
-                    <path d="M8 12L10.5 10L13 12L16 9" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-            </div>
-            <h2 class="text-2xl font-bold text-white text-center mb-2">Selamat Datang Kembali</h2>
-            <p class="text-slate-400 text-center mb-6">Login untuk mengakses dasbor SEO Pro.</p>
-            <form id="login-form" autocomplete="off">
+            
+            <form id="loginForm" class="mt-10 space-y-6 text-left" autocomplete="off">
                 <div class="space-y-4">
-                    <input type="email" id="email-input" autocomplete="off" placeholder="Email" class="w-full bg-slate-700/50 border border-slate-700 text-white rounded-lg p-3 focus:ring-2 focus:ring-cyan-500 focus:outline-none placeholder-slate-500" required>
-                    <input type="password" id="password-input" autocomplete="off" placeholder="Password" class="w-full bg-slate-700/50 border border-slate-700 text-white rounded-lg p-3 focus:ring-2 focus:ring-cyan-500 focus:outline-none placeholder-slate-500" required>
-                    <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-lg py-3 px-4 rounded-lg transition-all duration-300 shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40">
-                        Login
+                    <div>
+                        <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Email Boss</label>
+                        <input id="emailInput" type="email" required placeholder="boss@company.com" class="premium-input text-sm" autocomplete="off">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Password</label>
+                        <input id="passwordInput" type="password" required placeholder="••••••••" class="premium-input text-sm" autocomplete="new-password">
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" id="loginBtn" class="w-full btn-luxury py-5 rounded-lg shadow-xl">
+                        Masuk ke Command Center
                     </button>
                 </div>
             </form>
-            <p class="text-center text-cyan-400 text-sm mt-6 font-semibold">Made by ProsBe</p>
-            <p id="login-error" class="text-red-400 text-center mt-2 h-5"></p>
+            <p class="text-[10px] text-gray-600 uppercase tracking-widest mt-8">Keamanan: 1 Perangkat 1 Akun Aktif</p>
         </div>
     </div>
 
-
-    <div id="main-dashboard" class="flex h-screen bg-slate-900 opacity-0 pointer-events-none transition-opacity duration-500">
-        <!-- Sidebar -->
-        <aside id="sidebar" class="w-64 bg-slate-800/50 backdrop-blur-sm p-6 flex-shrink-0 flex flex-col transition-all duration-300 -translate-x-full sm:translate-x-0 sm:relative fixed sm:h-full h-full z-20">
-            <!-- Logo -->
-            <div class="flex items-center gap-3 mb-10">
-                 <div class="p-2 bg-cyan-500/20 rounded-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                 </div>
-                <h1 class="text-2xl font-bold text-white">SEO Pro</h1>
+    <!-- API KEY INPUT SECTION -->
+    <div id="apiKeySection" class="hidden min-h-screen flex items-center justify-center p-6">
+        <div class="max-w-lg w-full space-y-8 p-10 rounded-2xl bg-white/[0.02] border border-white/[0.1] backdrop-blur-xl shadow-2xl fade-in text-center">
+            <div>
+                <h2 class="text-3xl font-black tracking-tighter mb-4 uppercase">
+                    KONFIGURASI <span class="gold-text">OTAK AI</span>
+                </h2>
+                <p class="text-gray-500 text-sm leading-relaxed mb-8 text-justify px-4">
+                    Boss, aplikasi ini memerlukan sumber kecerdasan dari Google AI Studio. Silakan masukkan Kunci API Anda untuk mengaktifkan audit sistem SEO & Reputasi Founder 2026.
+                </p>
             </div>
 
-            <!-- Navigation -->
-            <nav class="flex-grow overflow-y-auto">
-                <ul class="space-y-3">
-                    <li>
-                        <a href="#" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-white transition-all duration-200 active" data-target="page-analysis">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                            <span class="font-medium">Audit Konten AI</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-white transition-all duration-200" data-target="technical-analysis">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-                            <span class="font-medium">Analisis Teknis</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-white transition-all duration-200" data-target="speed-analysis">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
-                            <span class="font-medium">Kecepatan Situs</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-white transition-all duration-200" data-target="keyword-generator">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
-                            <span class="font-medium">Riset Keyword</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-white transition-all duration-200" data-target="serp-preview">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                            <span class="font-medium">Pratinjau SERP</span>
-                        </a>
-                    </li>
-                    <!-- New History Menu -->
-                    <li>
-                        <a href="#" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-white transition-all duration-200" data-target="history-log">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                            <span class="font-medium">Riwayat Kerja</span>
-                        </a>
-                    </li>
-                     <li>
-                        <a href="#" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-white transition-all duration-200" data-target="settings">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                            <span class="font-medium">Pengaturan</span>
-                        </a>
-                    </li>
-                     <li>
-                        <a href="#" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-white transition-all duration-200" data-target="help-guide">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                            <span class="font-medium">Bantuan</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="space-y-6 text-left">
+                <div>
+                    <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Google AI API Key</label>
+                    <input id="apiInput" type="password" placeholder="AIzaSy..." class="premium-input text-sm">
+                </div>
 
-            <!-- Logout Button -->
-            <div class="mt-6">
-                 <a href="#" id="logout-button" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-400 hover:bg-red-500/20 hover:text-red-400 transition-all duration-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                    <span class="font-medium">Keluar</span>
-                </a>
+                <div class="flex flex-col gap-4">
+                    <button id="validateBtn" class="w-full btn-luxury py-5 rounded-lg">
+                        Validasi & Aktifkan
+                    </button>
+                    <a href="https://aistudio.google.com/app/apikey" target="_blank" class="w-full btn-outline py-4 rounded-lg text-center text-xs flex items-center justify-center gap-2">
+                        <span>Tutorial Mendapatkan API Key</span>
+                    </a>
+                </div>
             </div>
+            <button id="cancelAccessBtn" class="text-[10px] font-bold text-gray-600 uppercase tracking-widest hover:text-red-500 transition-colors mt-4">Batalkan Akses</button>
+        </div>
+    </div>
 
-            <div class="text-center text-xs text-slate-500 mt-6">
-                <p>&copy; 2025 SEO Tools Pro</p>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <div class="flex-1 flex flex-col overflow-hidden">
-             <!-- Top Bar -->
-            <header class="bg-slate-900/60 backdrop-blur-sm flex items-center justify-between p-4 border-b border-slate-800 sm:justify-end relative">
-                 <!-- Mobile Menu Toggle -->
-                <button id="menu-toggle" class="sm:hidden p-2 rounded-md text-slate-400 hover:bg-slate-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                </button>
-                <div class="text-lg font-bold text-white" id="header-title">Analisis Halaman</div>
-                <div class="w-10 sm:hidden"></div> <!-- Spacer for mobile title centering -->
+    <!-- MAIN DASHBOARD SECTION -->
+    <div id="mainDashboard" class="hidden p-8 md:p-20">
+        <div class="max-w-6xl mx-auto">
+            <!-- HEADER -->
+            <header class="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <h1 class="text-5xl md:text-6xl font-black mb-6 tracking-tighter uppercase">
+                        SEO <span class="gold-text">SPESIALIS</span>
+                    </h1>
+                    <p class="text-gray-500 text-xl font-light max-w-3xl text-justify">
+                        Intelijen Strategis 2026. Menganalisis <span class="text-white">Founder Authority</span> dan <span class="text-white">Deep Investigative Analysis</span>. Kami memastikan Boss menjadi otoritas tunggal di ekosistem digital.
+                    </p>
+                </div>
+                <div class="flex flex-col items-end gap-3">
+                    <button id="resetApiBtn" class="text-[10px] font-bold text-yellow-600 uppercase tracking-widest hover:text-yellow-400 transition-colors">Reset API Key</button>
+                    <button id="logoutBtn" class="text-[10px] font-bold text-gray-600 uppercase tracking-widest hover:text-red-500 transition-colors">Log Out</button>
+                </div>
             </header>
-            
-            <!-- Content Area -->
-            <main class="flex-1 overflow-y-auto p-6 md:p-8">
-                <!-- API Key Notice -->
-                <div id="api-key-notice" class="hidden bg-yellow-900/50 border border-yellow-700 text-yellow-300 p-4 rounded-lg mb-6 flex items-center justify-between">
-                    <div class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                        <span>Fitur AI memerlukan API Key. Harap masukkan di halaman Pengaturan.</span>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                <!-- INPUT PANEL -->
+                <div class="lg:col-span-4 space-y-8">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Nama Brand Boss</label>
+                            <input id="urlInput" type="text" placeholder="Misal: Almaz Fried Chicken" class="premium-input text-sm">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Nama Kompetitor Boss</label>
+                            <input id="compInput" type="text" placeholder="Masukkan Brand Pesaing" class="premium-input text-sm">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Sektor Industri Boss</label>
+                            <select id="industrySelect" class="premium-input text-sm appearance-none cursor-pointer">
+                                <option value="" disabled selected>Pilih Bidang Bisnis Boss...</option>
+                                <optgroup label="F&B & Kuliner">
+                                    <option value="Food & Beverage">Restoran Taste Saudi / Lokal</option>
+                                    <option value="Multi-Location Retail">Waralaba Multi-Cabang</option>
+                                </optgroup>
+                                <optgroup label="Teknologi & Digital">
+                                    <option value="SaaS & AI Tech">Aplikasi & Teknologi</option>
+                                    <option value="Fintech">Keuangan Digital</option>
+                                </optgroup>
+                                <option value="manual" class="font-bold text-yellow-500 uppercase">+ Ketik Bidang Sendiri</option>
+                            </select>
+                        </div>
+
+                        <div id="manualIndustryWrapper" class="hidden">
+                            <label class="block text-[11px] font-bold text-yellow-600 uppercase tracking-[0.2em] mb-2 italic">Sektor Bisnis Spesifik Boss</label>
+                            <input id="manualIndustry" type="text" placeholder="Misal: Kuliner Berbasis Nilai Islam..." class="premium-input text-sm border-yellow-900/40">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Detail Intelijen Bisnis (Jiwa Bisnis)</label>
+                            <textarea id="targetText" rows="5" placeholder="Masukkan detail: Siapa Founder-nya, apa budayanya, apa nilai uniknya." class="premium-input text-sm resize-none"></textarea>
+                        </div>
+
+                        <button id="analyzeBtn" class="w-full btn-luxury py-5 rounded-lg">
+                            Mulai Audit Masterplan 2026
+                        </button>
                     </div>
-                    <button id="close-notice-button" class="text-yellow-300 hover:text-white">&times;</button>
                 </div>
 
-                <!-- Page Analysis Tool (AI Enhanced) -->
-                <div id="page-analysis" class="content-panel active">
-                    <div class="bg-slate-800 p-6 rounded-xl shadow-2xl shadow-slate-900/50">
-                        <h2 class="text-2xl font-bold text-white mb-4">Audit Konten & Strategi AI</h2>
-                        <p class="text-slate-400 mb-4">Dapatkan daftar perbaikan prioritas yang harus Anda lakukan untuk ranking #1.</p>
-                        <form id="analysis-form" class="space-y-4">
-                            <input type="url" id="url-input" placeholder="Masukkan URL website Anda/Klien" required class="w-full bg-slate-700/50 border border-slate-700 text-white rounded-lg p-4 focus:ring-2 focus:ring-cyan-500 focus:outline-none placeholder-slate-500 text-lg">
-                            <input type="text" id="keyword-input" placeholder="Kata Kunci yang Ingin Dikejar" class="w-full bg-slate-700/50 border border-slate-700 text-white rounded-lg p-4 focus:ring-2 focus:ring-cyan-500 focus:outline-none placeholder-slate-500 text-lg">
-                            <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-lg py-4 px-4 rounded-lg transition-all duration-300 shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40">
-                                Mulai Audit Cerdas
-                            </button>
-                        </form>
-                        <div id="analysis-results" class="mt-8"></div>
+                <!-- RESULT PANEL -->
+                <div class="lg:col-span-8">
+                    <div id="placeholderUI" class="h-full min-h-[500px] flex flex-col items-center justify-center text-center opacity-40">
+                        <p class="text-xl font-light italic text-justify px-10 leading-relaxed">Masukkan detail brand dan "Jiwa Bisnis" Boss untuk membedah peta kemenangan 2026.</p>
                     </div>
-                </div>
-                
-                <!-- Technical Analysis Tool -->
-                <div id="technical-analysis" class="content-panel">
-                    <div class="bg-slate-800 p-6 rounded-xl shadow-2xl shadow-slate-900/50">
-                        <h2 class="text-2xl font-bold text-white mb-4">Cek Kesehatan Teknis Website</h2>
-                        <p class="text-slate-400 mb-4">Pastikan fondasi website kuat agar disukai Google.</p>
-                        <form id="tech-analysis-form" class="space-y-4">
-                            <input type="url" id="tech-url-input" placeholder="Masukkan URL untuk analisis teknis" required class="w-full bg-slate-700/50 border border-slate-700 text-white rounded-lg p-4 focus:ring-2 focus:ring-cyan-500 focus:outline-none placeholder-slate-500 text-lg">
-                            <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-lg py-4 px-4 rounded-lg transition-all duration-300 shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40">
-                                Cek Kesehatan Teknis
-                            </button>
-                        </form>
-                        <div id="tech-analysis-results" class="mt-8"></div>
-                    </div>
-                </div>
 
-                <!-- Speed Analysis Tool -->
-                <div id="speed-analysis" class="content-panel">
-                    <div class="bg-slate-800 p-6 rounded-xl shadow-2xl shadow-slate-900/50">
-                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center">
-                            Analisis Kecepatan (Core Web Vitals)
-                        </h2>
-                        <p class="text-slate-400 mb-4">Kecepatan adalah uang. Cek apakah website Anda cukup cepat untuk pelanggan.</p>
-                        <form id="speed-form" class="space-y-4">
-                            <input type="url" id="speed-url-input" placeholder="Masukkan URL (contoh: https://google.com)" required class="w-full bg-slate-700/50 border border-slate-700 text-white rounded-lg p-4 focus:ring-2 focus:ring-cyan-500 focus:outline-none placeholder-slate-500 text-lg">
-                            <div class="flex gap-4">
-                                <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-lg py-4 px-4 rounded-lg transition-all duration-300 shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40">
-                                    Cek Kecepatan (Mobile)
-                                </button>
+                    <div id="resultUI" class="hidden space-y-16 text-center">
+                        <!-- METRICS -->
+                        <div class="grid grid-cols-3 gap-12">
+                            <div>
+                                <span class="text-[11px] font-bold text-gray-600 uppercase tracking-widest">Founder Authority</span>
+                                <div id="m1" class="text-4xl font-black mt-2">0%</div>
+                                <p class="text-[9px] text-gray-500 mt-2">Otoritas Personal Owner</p>
                             </div>
-                        </form>
-                        <div id="speed-results" class="mt-8"></div>
-                    </div>
-                </div>
-
-                <!-- Keyword Generator Tool -->
-                <div id="keyword-generator" class="content-panel">
-                     <div class="bg-slate-800 p-6 rounded-xl shadow-2xl shadow-slate-900/50">
-                        <h2 class="text-2xl font-bold text-white mb-4">Riset Kata Kunci & Ide Konten</h2>
-                        <p class="text-slate-400 mb-4">Temukan apa yang sebenarnya dicari pelanggan Anda.</p>
-                        <form id="keyword-gen-form" class="space-y-4">
-                            <input type="text" id="base-keyword" placeholder="Masukkan topik bisnis Anda (contoh: Katering Diet)" required class="w-full bg-slate-700/50 border border-slate-700 text-white rounded-lg p-4 focus:ring-2 focus:ring-cyan-500 focus:outline-none placeholder-slate-500 text-lg">
-                            <div class="flex gap-3">
-                                <button type="submit" class="flex-1 bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-lg py-4 px-4 rounded-lg transition-all duration-300 shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40">
-                                    Cari Ide Menguntungkan
-                                </button>
+                            <div>
+                                <span class="text-[11px] font-bold text-gray-600 uppercase tracking-widest">Culture Trust</span>
+                                <div id="m2" class="text-4xl font-black mt-2 text-gray-500">0.0</div>
+                                <p class="text-[9px] text-gray-500 mt-2">Sinyal Kepercayaan Budaya</p>
                             </div>
-                        </form>
-                        <div id="keyword-results" class="mt-8"></div>
-                    </div>
-                </div>
-
-                <!-- SERP Preview Tool -->
-                <div id="serp-preview" class="content-panel">
-                    <div class="bg-slate-800 p-6 rounded-xl shadow-2xl shadow-slate-900/50">
-                        <div class="grid lg:grid-cols-2 gap-8">
-                            <div class="space-y-4">
-                                <h2 class="text-2xl font-bold text-white mb-4">Simulator Tampilan Google</h2>
-                                <p class="text-slate-400 text-sm">Pastikan judul dan deskripsi Anda menarik sebelum dipublikasikan.</p>
-                                <div>
-                                    <label for="serp-title" class="block text-sm font-medium text-slate-300 mb-2">Judul Halaman (Title Tag)</label>
-                                    <input type="text" id="serp-title" class="w-full bg-slate-700/50 border border-slate-700 text-white rounded-lg p-3" maxlength="60">
-                                    <p class="text-xs text-slate-400 mt-1 text-right"><span id="title-char-count">0</span>/60</p>
-                                </div>
-                                <div>
-                                    <label for="serp-url" class="block text-sm font-medium text-slate-300 mb-2">URL / Link</label>
-                                    <input type="text" id="serp-url" class="w-full bg-slate-700/50 border border-slate-700 text-white rounded-lg p-3" value="https://contoh.com/halaman-anda">
-                                </div>
-                                <div>
-                                    <label for="serp-desc" class="block text-sm font-medium text-slate-300 mb-2">Deskripsi Singkat (Meta Description)</label>
-                                    <textarea id="serp-desc" rows="4" class="w-full bg-slate-700/50 border border-slate-700 text-white rounded-lg p-3" maxlength="160"></textarea>
-                                    <p class="text-xs text-slate-400 mt-1 text-right"><span id="desc-char-count">0</span>/160</p>
-                                </div>
+                            <div>
+                                <span class="text-[11px] font-bold text-gray-600 uppercase tracking-widest">AI Preference</span>
+                                <div id="m3" class="text-4xl font-black mt-2 text-gray-500">0.0</div>
+                                <p class="text-[9px] text-gray-500 mt-2">Bias Rekomendasi Mesin</p>
                             </div>
-                            <div class="bg-white p-4 rounded-lg mt-5 lg:mt-0 h-fit">
-                                <p class="text-xs text-gray-500 mb-1">Tampilan di Google akan seperti ini:</p>
-                                <p id="preview-url" class="text-sm text-gray-800 truncate">https://contoh.com/halaman-anda</p>
-                                <h3 id="preview-title" class="text-xl text-blue-800 hover:underline cursor-pointer truncate font-medium">Judul Halaman Anda</h3>
-                                <p id="preview-desc" class="text-sm text-gray-600 mt-1">Deskripsi meta halaman Anda akan muncul di sini. Tulis kalimat yang mengajak orang untuk klik link ini.</p>
+                        </div>
+
+                        <div class="pt-12 border-t border-white/10 text-justify">
+                            <div id="aiResponseContent" class="prose prose-invert max-w-none">
+                                <!-- AI Content -->
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- History Panel (NEW) -->
-                <div id="history-log" class="content-panel">
-                    <div class="bg-slate-800 p-6 rounded-xl shadow-2xl shadow-slate-900/50">
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-2xl font-bold text-white">Riwayat Kerja</h2>
-                            <button id="clear-history" class="text-sm text-red-400 hover:text-red-300 hover:underline">Hapus Semua Riwayat</button>
-                        </div>
-                        <p class="text-slate-400 mb-4">Daftar analisis terakhir yang Anda lakukan. Data tersimpan otomatis di browser ini.</p>
-                        <div id="history-list" class="space-y-3">
-                            <p class="text-slate-500 italic">Belum ada riwayat.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Settings Panel -->
-                <div id="settings" class="content-panel">
-                    <div class="bg-slate-800 p-6 rounded-xl shadow-2xl shadow-slate-900/50">
-                        <h2 class="text-2xl font-bold text-white mb-4">Pengaturan API Key</h2>
-                        <p class="text-slate-400 mb-6">Masukkan API Key Google AI Studio agar fitur cerdas bisa berjalan.</p>
-                        <form id="api-key-form">
-                            <div class="space-y-4">
-                                <input type="password" id="api-key-input" placeholder="Tempel API Key di sini..." class="w-full bg-slate-700/50 border border-slate-700 text-white rounded-lg p-3 focus:ring-2 focus:ring-cyan-500 focus:outline-none placeholder-slate-500">
-                                <div class="flex gap-4">
-                                    <button type="submit" id="save-api-key" class="flex-1 bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-200">Simpan Key</button>
-                                    <button type="button" id="delete-api-key" class="flex-1 bg-red-600/80 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-200">Hapus Key</button>
-                                </div>
-                            </div>
-                        </form>
-                        <p id="api-key-status" class="text-center mt-4 h-5"></p>
-                    </div>
-                </div>
-                
-                <!-- Help Guide -->
-                <div id="help-guide" class="content-panel">
-                    <div class="bg-slate-800 p-6 md:p-8 rounded-xl shadow-2xl shadow-slate-900/50">
-                        <div class="prose prose-invert max-w-none prose-p:text-slate-300 prose-headings:text-white prose-strong:text-white prose-h3:text-cyan-400 prose-a:text-cyan-400 hover:prose-a:text-cyan-300 prose-code:bg-slate-700 prose-code:text-cyan-400 prose-code:px-2 prose-code:py-1 prose-code:rounded-md">
-                            <h2 class="text-3xl font-bold mb-6">Pusat Bantuan & Tutorial</h2>
-                            <p class="text-lg mb-8">Bingung mulai dari mana? Jangan khawatir. Panduan ini dirancang khusus untuk Anda yang baru belajar SEO, tanpa istilah teknis yang membingungkan.</p>
-                            
-                            <div class="space-y-8">
-                                <!-- Section: API Key -->
-                                <div class="bg-slate-700/30 p-6 rounded-lg border-l-4 border-cyan-500">
-                                    <h3 class="text-xl font-bold mt-0">🔑 Langkah Wajib: Mengatur "Kunci" AI</h3>
-                                    <p>Beberapa fitur canggih di sini butuh "otak" tambahan dari Google AI. Supaya jalan, Anda butuh API Key (Kunci API). Ini gratis kok!</p>
-                                    <ol class="list-decimal pl-5 space-y-2">
-                                        <li>Buka <a href="https://aistudio.google.com/" target="_blank" class="underline">Google AI Studio</a> dan login dengan akun Google Anda.</li>
-                                        <li>Cari tombol bertuliskan <strong>"Get API key"</strong> atau <strong>"Create API key"</strong>.</li>
-                                        <li>Salin kode aneh yang muncul (kombinasi huruf dan angka acak).</li>
-                                        <li>Kembali ke aplikasi ini, masuk ke menu <strong class="text-cyan-400">Pengaturan</strong>, tempel kodenya, dan klik Simpan.</li>
-                                    </ol>
-                                </div>
-
-                                <!-- Feature 1 -->
-                                <div>
-                                    <h3 class="text-xl font-bold">1. Audit Konten AI (Cek Kesehatan Tulisan)</h3>
-                                    <p><strong>Ibaratnya:</strong> Seperti meminta editor senior memeriksa artikel Anda sebelum diterbitkan.</p>
-                                    <ul class="list-disc pl-5 space-y-2 bg-slate-700/20 p-4 rounded-md">
-                                        <li><strong>Cara Pakai:</strong> Masukkan link halaman produk/artikel Anda, lalu tulis kata kunci utamanya (misal: "Jual Sepatu Lari").</li>
-                                        <li><strong>Hasilnya:</strong> Anda akan mendapatkan daftar tugas prioritas. Kerjakan yang "Kritis" dulu, baru yang "Peluang".</li>
-                                    </ul>
-                                </div>
-
-                                <!-- Feature 2 -->
-                                <div>
-                                    <h3 class="text-xl font-bold">2. Analisis Teknis (Cek Mesin)</h3>
-                                    <p><strong>Ibaratnya:</strong> Membawa mobil ke bengkel untuk cek oli dan rem.</p>
-                                    <ul class="list-disc pl-5 space-y-2 bg-slate-700/20 p-4 rounded-md">
-                                        <li><strong>Kegunaan:</strong> Memastikan Google tidak "tersesat" saat mengunjungi website Anda.</li>
-                                        <li><strong>Apa yang dicari?</strong> Apakah ada gambar tanpa nama? Apakah ada data terstruktur (Schema) agar website terlihat keren di Google?</li>
-                                    </ul>
-                                </div>
-
-                                <!-- Feature 3 -->
-                                <div>
-                                    <h3 class="text-xl font-bold">3. Kecepatan Situs</h3>
-                                    <p><strong>Ibaratnya:</strong> Tidak ada yang suka mengantre. Kalau toko Anda bukanya lama, pelanggan pergi.</p>
-                                    <ul class="list-disc pl-5 space-y-2 bg-slate-700/20 p-4 rounded-md">
-                                        <li><strong>Kegunaan:</strong> Mengukur kecepatan website di HP. Usahakan skor di atas 50 (Kuning) atau idealnya 90 (Hijau).</li>
-                                    </ul>
-                                </div>
-
-                                <!-- Feature 4 -->
-                                <div>
-                                    <h3 class="text-xl font-bold">4. Riset Keyword</h3>
-                                    <p><strong>Ibaratnya:</strong> Menguping apa yang sedang dibutuhkan pasar.</p>
-                                    <ul class="list-disc pl-5 space-y-2 bg-slate-700/20 p-4 rounded-md">
-                                        <li><strong>Cara Pakai:</strong> Ketik topik umum, misal "Kopi".</li>
-                                        <li><strong>Hasilnya:</strong> Ide judul artikel spesifik yang banyak dicari orang, lengkap dengan prediksi tingkat kesulitannya.</li>
-                                        <li><strong>Tips Pro:</strong> Unduh hasilnya ke Excel (CSV) untuk arsip Anda.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
+            </div>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
+    <!-- NOTIFICATION -->
+    <div id="toast" class="fixed bottom-10 right-10 px-8 py-4 bg-red-950 border border-red-500 text-white rounded-lg hidden z-50 text-sm shadow-2xl"></div>
+
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-      
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Konfigurasi Firebase Boss
         const firebaseConfig = {
-            apiKey: "AIzaSyBBR-EM4m45pYShnwa-U5WN-i9kuUh206o",
-            authDomain: "seo-pro-87680.firebaseapp.com",
-            projectId: "seo-pro-87680",
-            storageBucket: "seo-pro-87680.appspot.com",
-            messagingSenderId: "564299648143",
-            appId: "1:564299648143:web:63eb0878b2a60e013bb4fa"
+            apiKey: "AIzaSyBAZQjA0KMpsDUYv12ilDJhPrqUOB80ZvM",
+            authDomain: "seospesialis-8d59e.firebaseapp.com",
+            projectId: "seospesialis-8d59e",
+            storageBucket: "seospesialis-8d59e.firebasestorage.app",
+            messagingSenderId: "110235591146",
+            appId: "1:110235591146:web:988e111910786443cb1293"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = "seo-spesialis-2026";
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const loginOverlay = document.getElementById('login-overlay');
-            const loginForm = document.getElementById('login-form');
-            const emailInput = document.getElementById('email-input');
-            const passwordInput = document.getElementById('password-input');
-            const loginError = document.getElementById('login-error');
-            const loginBox = document.getElementById('login-box');
-            const mainDashboard = document.getElementById('main-dashboard');
-            const apiKeyNotice = document.getElementById('api-key-notice');
-            const closeNoticeButton = document.getElementById('close-notice-button');
-            const API_KEY_STORAGE = 'seoProUserApiKey';
-            const HISTORY_STORAGE = 'seoProHistory';
+        let currentGeminiKey = sessionStorage.getItem('gemini_api_key') || "";
 
-            // --- Helper: History Management ---
-            function saveHistory(type, summary, url) {
-                const history = JSON.parse(localStorage.getItem(HISTORY_STORAGE) || '[]');
-                const newItem = {
-                    type,
-                    summary,
-                    url,
-                    date: new Date().toLocaleString('id-ID')
-                };
-                history.unshift(newItem); // Add to top
-                if (history.length > 20) history.pop(); // Keep last 20
-                localStorage.setItem(HISTORY_STORAGE, JSON.stringify(history));
-                renderHistory();
+        // UI Selectors
+        const loginSection = document.getElementById('loginSection');
+        const apiKeySection = document.getElementById('apiKeySection');
+        const mainDashboard = document.getElementById('mainDashboard');
+        const loginForm = document.getElementById('loginForm');
+        const toast = document.getElementById('toast');
+
+        // DEVICE FINGERPRINT (Simple UUID)
+        function getLocalDeviceId() {
+            let id = localStorage.getItem('app_device_signature');
+            if (!id) {
+                id = crypto.randomUUID();
+                localStorage.setItem('app_device_signature', id);
+            }
+            return id;
+        }
+
+        // ROUTING LOGIC WITH DEVICE LOCK
+        async function updateUIRoute(user) {
+            if (!user) {
+                loginSection.classList.remove('hidden');
+                apiKeySection.classList.add('hidden');
+                mainDashboard.classList.add('hidden');
+                return;
             }
 
-            function renderHistory() {
-                const historyList = document.getElementById('history-list');
-                const history = JSON.parse(localStorage.getItem(HISTORY_STORAGE) || '[]');
-                
-                if (history.length === 0) {
-                    historyList.innerHTML = '<p class="text-slate-500 italic text-center py-4">Belum ada riwayat pekerjaan.</p>';
-                    return;
-                }
+            // PERIKSA DEVICE LOCK (1 ID 1 DEVICE)
+            try {
+                const deviceRef = doc(db, 'artifacts', appId, 'users', user.uid, 'security', 'device');
+                const snap = await getDoc(deviceRef);
+                const localId = getLocalDeviceId();
 
-                historyList.innerHTML = history.map(item => `
-                    <div class="bg-slate-700/30 p-4 rounded-lg border-l-4 border-cyan-500 flex justify-between items-start">
-                        <div>
-                            <p class="text-xs text-cyan-400 font-bold uppercase tracking-wider mb-1">${item.type}</p>
-                            <p class="text-white font-medium mb-1 truncate w-64 md:w-auto">${item.summary}</p>
-                            <p class="text-xs text-slate-500">${item.url}</p>
-                        </div>
-                        <span class="text-xs text-slate-400 whitespace-nowrap ml-4">${item.date}</span>
-                    </div>
-                `).join('');
-            }
-
-            document.getElementById('clear-history').addEventListener('click', () => {
-                if(confirm('Hapus semua riwayat?')) {
-                    localStorage.removeItem(HISTORY_STORAGE);
-                    renderHistory();
-                }
-            });
-
-            // --- Helper: CSV Export ---
-            window.downloadCSV = function(content, filename) {
-                const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-                const link = document.createElement("a");
-                if (link.download !== undefined) {
-                    const url = URL.createObjectURL(blob);
-                    link.setAttribute("href", url);
-                    link.setAttribute("download", filename);
-                    link.style.visibility = 'hidden';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                }
-            }
-
-            // --- Login & Init ---
-            loginForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                loginError.textContent = '';
-                const email = emailInput.value;
-                const password = passwordInput.value;
-
-                try {
-                    await signInWithEmailAndPassword(auth, email, password);
-                    loginOverlay.classList.add('opacity-0', 'pointer-events-none');
-                    mainDashboard.classList.remove('opacity-0', 'pointer-events-none');
-                    checkApiKeyStatus();
-                    renderHistory();
-                } catch (error) {
-                    loginBox.classList.add('shake');
-                    setTimeout(() => loginBox.classList.remove('shake'), 500);
-                    loginError.textContent = 'Gagal login. Cek email/password.';
-                }
-            });
-
-            // --- API Key ---
-            const apiKeyForm = document.getElementById('api-key-form');
-            const apiKeyInput = document.getElementById('api-key-input');
-            const apiKeyStatus = document.getElementById('api-key-status');
-            const deleteApiKeyButton = document.getElementById('delete-api-key');
-
-            function checkApiKeyStatus() {
-                const savedKey = localStorage.getItem(API_KEY_STORAGE);
-                if (savedKey) {
-                    apiKeyInput.value = savedKey;
-                    apiKeyNotice.classList.add('hidden');
-                } else {
-                    apiKeyNotice.classList.remove('hidden');
-                }
-            }
-
-            apiKeyForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const newKey = apiKeyInput.value.trim();
-                if (newKey) {
-                    localStorage.setItem(API_KEY_STORAGE, newKey);
-                    apiKeyStatus.textContent = 'API Key disimpan!';
-                    apiKeyStatus.className = 'text-green-400 text-center mt-4 h-5';
-                    checkApiKeyStatus();
-                } else {
-                    apiKeyStatus.textContent = 'Isi API Key dulu.';
-                    apiKeyStatus.className = 'text-red-400 text-center mt-4 h-5';
-                }
-                setTimeout(() => apiKeyStatus.textContent = '', 3000);
-            });
-
-            deleteApiKeyButton.addEventListener('click', () => {
-                localStorage.removeItem(API_KEY_STORAGE);
-                apiKeyInput.value = '';
-                apiKeyStatus.textContent = 'API Key dihapus.';
-                apiKeyStatus.className = 'text-yellow-400 text-center mt-4 h-5';
-                checkApiKeyStatus();
-                setTimeout(() => apiKeyStatus.textContent = '', 3000);
-            });
-            
-            closeNoticeButton.addEventListener('click', () => apiKeyNotice.classList.add('hidden'));
-
-            // --- Navigation ---
-            const navLinks = document.querySelectorAll('.nav-link');
-            const contentPanels = document.querySelectorAll('.content-panel');
-            const headerTitle = document.getElementById('header-title');
-            const menuToggle = document.getElementById('menu-toggle');
-            const sidebar = document.getElementById('sidebar');
-            const logoutButton = document.getElementById('logout-button');
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    navLinks.forEach(item => item.classList.remove('active'));
-                    link.classList.add('active');
-                    headerTitle.textContent = link.querySelector('span').textContent;
-                    const targetId = link.getAttribute('data-target');
-                    contentPanels.forEach(panel => {
-                        panel.id === targetId ? panel.classList.add('active') : panel.classList.remove('active');
-                    });
-                    if (window.innerWidth < 640) sidebar.classList.add('-translate-x-full');
-                });
-            });
-
-            logoutButton.addEventListener('click', async (e) => {
-                e.preventDefault();
-                await signOut(auth);
-                window.location.reload();
-            });
-
-            menuToggle.addEventListener('click', () => sidebar.classList.toggle('-translate-x-full'));
-
-            // --- Core Functions ---
-            async function fetchHTML(url) {
-                const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
-                const response = await fetch(proxyUrl);
-                if (!response.ok) throw new Error('Gagal akses URL. Website mungkin memblokir bot.');
-                return await response.text();
-            }
-
-            function extractContentText(doc) {
-                const clone = doc.body.cloneNode(true);
-                ['script', 'style', 'noscript', 'iframe', 'svg'].forEach(tag => clone.querySelectorAll(tag).forEach(el => el.remove()));
-                return clone.innerText.replace(/\s+/g, ' ').substring(0, 3500);
-            }
-
-            // --- Feature 1: AI Content Audit ---
-            const analysisForm = document.getElementById('analysis-form');
-            const urlInput = document.getElementById('url-input');
-            const keywordInput = document.getElementById('keyword-input');
-            const analysisResults = document.getElementById('analysis-results');
-
-            // Global data for PDF
-            let currentAnalysisData = {};
-
-            analysisForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const url = urlInput.value;
-                const keyword = keywordInput.value.toLowerCase().trim();
-                const userApiKey = localStorage.getItem(API_KEY_STORAGE);
-
-                analysisResults.innerHTML = `<div class="flex justify-center items-center flex-col gap-4 p-8 bg-slate-700/30 rounded-lg"><div class="loader"></div><p class="text-slate-400">AI sedang menganalisis konten...</p></div>`;
-
-                try {
-                    const html = await fetchHTML(url);
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const title = doc.querySelector('title')?.innerText || 'Tidak ada';
-                    const desc = doc.querySelector('meta[name="description"]')?.getAttribute('content') || 'Tidak ada';
-                    const h1 = doc.querySelector('h1')?.innerText || 'Tidak ada';
-                    
-                    // Save for PDF
-                    currentAnalysisData = { url, keyword, title, desc, h1, aiContent: '' };
-
-                    // AI Prompt for Actionable Checklist
-                    let aiAnalysisHtml = '';
-                    if (userApiKey) {
-                        const pageText = extractContentText(doc);
-                        const prompt = `Anda adalah konsultan SEO Senior. Berikan audit taktis untuk konten ini dengan keyword target: "${keyword}".
-                        Konten: "${pageText}"
-                        
-                        Berikan output HTML (hanya <div>, <h3>, <ul>, <li>, <p>) dengan struktur berikut:
-                        1. <h3>3 Kesalahan Fatal (Prioritas Tinggi)</h3>: Daftar hal kritis yang harus diperbaiki segera.
-                        2. <h3>3 Peluang Cepat (Quick Wins)</h3>: Hal mudah yang bisa menaikkan ranking.
-                        3. <h3>Saran Konten</h3>: 2 paragraf pendek saran pengembangan topik agar lebih relevan.
-                        
-                        Gunakan bahasa Indonesia yang lugas dan mudah dimengerti pemula.`;
-                        
-                        const aiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${userApiKey}`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: prompt }] }] })
-                        });
-                        
-                        if (aiResponse.ok) {
-                            const aiData = await aiResponse.json();
-                            aiAnalysisHtml = (aiData.candidates?.[0]?.content?.parts?.[0]?.text || '').replace(/```html|```/g, '');
-                            currentAnalysisData.aiContent = aiAnalysisHtml;
-                        }
+                if (snap.exists()) {
+                    const dbId = snap.data().deviceId;
+                    if (dbId !== localId) {
+                        notify("AKSES DITOLAK: Akun ini terikat pada perangkat lain.");
+                        setTimeout(() => signOut(auth), 2000);
+                        return;
                     }
-
-                    saveHistory('Audit Konten', `Audit untuk "${keyword}"`, url);
-
-                    analysisResults.innerHTML = `
-                        <div id="report-content" class="space-y-6">
-                            <div class="bg-slate-700/50 p-5 rounded-lg border border-cyan-500/30">
-                                <div class="flex items-center justify-between mb-4">
-                                    <h3 class="font-bold text-xl text-white">Laporan Audit AI</h3>
-                                    <span class="bg-cyan-900 text-cyan-200 text-xs px-2 py-1 rounded">Target: ${keyword}</span>
-                                </div>
-                                ${userApiKey ? `<div class="prose prose-invert prose-sm max-w-none">${aiAnalysisHtml}</div>` : '<p class="text-yellow-400">Masukkan API Key untuk melihat hasil audit AI.</p>'}
-                            </div>
-                            <button onclick="downloadPDF()" class="w-full bg-white text-slate-900 font-bold py-3 px-4 rounded-lg hover:bg-gray-200 transition flex justify-center items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                Download Laporan PDF untuk Klien
-                            </button>
-                        </div>
-                    `;
-
-                } catch (error) {
-                    analysisResults.innerHTML = `<div class="bg-red-900/50 border border-red-700 text-red-300 p-4 rounded-lg"><strong>Gagal:</strong> ${error.message}</div>`;
-                }
-            });
-
-            // --- Feature 2: Technical ---
-            const techAnalysisForm = document.getElementById('tech-analysis-form');
-            const techUrlInput = document.getElementById('tech-url-input');
-            const techResults = document.getElementById('tech-analysis-results');
-
-            techAnalysisForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const url = techUrlInput.value;
-                techResults.innerHTML = `<div class="flex justify-center p-8"><div class="loader"></div></div>`;
-
-                try {
-                    const html = await fetchHTML(url);
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-
-                    const schema = doc.querySelectorAll('script[type="application/ld+json"]').length;
-                    const ogTags = doc.querySelectorAll('meta[property^="og:"]').length;
-                    const images = Array.from(doc.querySelectorAll('img'));
-                    const missingAlt = images.filter(img => !img.alt).length;
-
-                    saveHistory('Analisis Teknis', `Cek teknis dasar`, url);
-
-                    techResults.innerHTML = `
-                        <div class="grid md:grid-cols-3 gap-4">
-                            <div class="bg-slate-700/50 p-4 rounded-lg text-center">
-                                <h4 class="text-slate-400 text-xs uppercase mb-1">Schema Markup</h4>
-                                <p class="text-2xl font-bold ${schema > 0 ? 'text-green-400' : 'text-red-400'}">${schema > 0 ? 'OK' : '0'}</p>
-                                <p class="text-xs text-slate-500">Penting untuk Rich Snippet</p>
-                            </div>
-                            <div class="bg-slate-700/50 p-4 rounded-lg text-center">
-                                <h4 class="text-slate-400 text-xs uppercase mb-1">Open Graph (Sosmed)</h4>
-                                <p class="text-2xl font-bold ${ogTags > 0 ? 'text-green-400' : 'text-yellow-400'}">${ogTags}</p>
-                                <p class="text-xs text-slate-500">Agar link cantik saat di-share</p>
-                            </div>
-                            <div class="bg-slate-700/50 p-4 rounded-lg text-center">
-                                <h4 class="text-slate-400 text-xs uppercase mb-1">Gambar Tanpa Alt</h4>
-                                <p class="text-2xl font-bold ${missingAlt === 0 ? 'text-green-400' : 'text-red-400'}">${missingAlt}</p>
-                                <p class="text-xs text-slate-500">Wajib diperbaiki untuk aksesibilitas</p>
-                            </div>
-                        </div>
-                    `;
-                } catch (error) {
-                    techResults.innerHTML = `<p class="text-red-400 text-center">${error.message}</p>`;
-                }
-            });
-
-            // --- Feature 3: Speed ---
-            const speedForm = document.getElementById('speed-form');
-            const speedUrlInput = document.getElementById('speed-url-input');
-            const speedResults = document.getElementById('speed-results');
-
-            speedForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const url = speedUrlInput.value;
-                speedResults.innerHTML = `<div class="flex justify-center flex-col items-center gap-4 p-8"><div class="loader"></div><p class="text-slate-400">Menghubungi Google...</p></div>`;
-
-                try {
-                    const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=mobile`;
-                    const response = await fetch(apiUrl);
-                    const data = await response.json();
-                    if (data.error) throw new Error(data.error.message);
-
-                    const score = data.lighthouseResult.categories.performance.score * 100;
-                    const color = score >= 90 ? 'text-green-400' : (score >= 50 ? 'text-yellow-400' : 'text-red-400');
-                    
-                    saveHistory('Cek Kecepatan', `Skor: ${Math.round(score)}`, url);
-
-                    speedResults.innerHTML = `
-                        <div class="text-center mb-6">
-                            <div class="inline-flex items-center justify-center w-24 h-24 rounded-full border-4 border-slate-600">
-                                <span class="text-4xl font-bold ${color}">${Math.round(score)}</span>
-                            </div>
-                            <p class="text-white font-medium mt-2">Skor Performa (Mobile)</p>
-                        </div>
-                    `;
-                } catch (error) {
-                    speedResults.innerHTML = `<p class="text-red-400 text-center">Gagal: ${error.message}</p>`;
-                }
-            });
-
-            // --- Feature 4: Keyword Generator ---
-            const keywordGenForm = document.getElementById('keyword-gen-form');
-            const baseKeywordInput = document.getElementById('base-keyword');
-            const keywordResults = document.getElementById('keyword-results');
-
-            keywordGenForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const userApiKey = localStorage.getItem(API_KEY_STORAGE);
-                if (!userApiKey) {
-                    keywordResults.innerHTML = `<p class="text-red-400">API Key diperlukan.</p>`;
-                    return;
-                }
-                
-                const baseKw = baseKeywordInput.value;
-                keywordResults.innerHTML = `<div class="flex justify-center p-4"><div class="loader"></div></div>`;
-
-                const prompt = `Berikan 10 ide kata kunci long-tail untuk topik "${baseKw}". Output format CSV (Comma Separated Values) dengan header: Keyword,Volume(Estimasi),Kesulitan(Low/Med/High),Intent. Tanpa teks lain.`;
-
-                try {
-                    const aiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${userApiKey}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: prompt }] }] })
-                    });
-                    
-                    const aiData = await aiResponse.json();
-                    let text = aiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
-                    text = text.replace(/```csv|```/g, '').trim();
-                    
-                    const rows = text.split('\n').map(row => row.split(','));
-                    
-                    let tableHtml = `<div class="overflow-x-auto"><table class="w-full text-left text-sm text-slate-300">
-                        <thead class="bg-slate-700 text-white"><tr><th class="p-3">Keyword</th><th class="p-3">Volume Est.</th><th class="p-3">Kesulitan</th><th class="p-3">Intent</th></tr></thead>
-                        <tbody class="divide-y divide-slate-700">
-                            ${rows.slice(1).map(r => `<tr><td class="p-3 font-medium text-cyan-400">${r[0] || ''}</td><td class="p-3">${r[1] || '-'}</td><td class="p-3">${r[2] || '-'}</td><td class="p-3">${r[3] || '-'}</td></tr>`).join('')}
-                        </tbody>
-                    </table></div>`;
-
-                    keywordResults.innerHTML = `
-                        ${tableHtml}
-                        <button onclick="downloadCSV(\`${text.replace(/"/g, '&quot;')}\`, 'keyword-research.csv')" class="mt-4 w-full bg-slate-700 hover:bg-slate-600 text-white py-2 rounded flex justify-center items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            Download CSV (Excel)
-                        </button>
-                    `;
-                } catch (error) {
-                    keywordResults.innerHTML = `<p class="text-red-400">Error: ${error.message}</p>`;
-                }
-            });
-
-            // --- SERP Preview ---
-            const serpTitle = document.getElementById('serp-title');
-            const serpUrl = document.getElementById('serp-url');
-            const serpDesc = document.getElementById('serp-desc');
-            const previewTitle = document.getElementById('preview-title');
-            const previewUrl = document.getElementById('preview-url');
-            const previewDesc = document.getElementById('preview-desc');
-            const titleCharCount = document.getElementById('title-char-count');
-            const descCharCount = document.getElementById('desc-char-count');
-
-            function updatePreview() {
-                previewTitle.textContent = serpTitle.value || 'Judul Halaman Anda';
-                previewUrl.textContent = serpUrl.value || 'https://website.com/slug';
-                previewDesc.textContent = serpDesc.value || 'Deskripsi meta...';
-                titleCharCount.textContent = serpTitle.value.length;
-                descCharCount.textContent = serpDesc.value.length;
-            }
-            [serpTitle, serpUrl, serpDesc].forEach(el => el.addEventListener('input', updatePreview));
-            updatePreview();
-
-            // --- PDF Export Logic ---
-            window.downloadPDF = function() {
-                const template = document.getElementById('pdf-template');
-                
-                // 1. Populate Date
-                const date = new Date().toLocaleDateString('id-ID', { 
-                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-                });
-                document.getElementById('pdf-date').textContent = `Tanggal: ${date}`;
-
-                // 2. Populate Target Info
-                document.getElementById('pdf-target-url').textContent = currentAnalysisData.url || '-';
-                document.getElementById('pdf-target-keyword').textContent = currentAnalysisData.keyword || '-';
-
-                // 3. Populate On-Page Analysis
-                document.getElementById('pdf-page-title').textContent = currentAnalysisData.title || '-';
-                document.getElementById('pdf-page-desc').textContent = currentAnalysisData.desc || '-';
-                document.getElementById('pdf-page-h1').textContent = currentAnalysisData.h1 || '-';
-
-                // 4. Populate AI Content
-                const aiContainer = document.getElementById('pdf-ai-content');
-                if (currentAnalysisData.aiContent) {
-                    aiContainer.innerHTML = currentAnalysisData.aiContent;
                 } else {
-                    aiContainer.innerHTML = '<p class="text-gray-400 italic">Analisis AI tidak tersedia atau API Key belum dimasukkan.</p>';
+                    // Daftarkan perangkat ini sebagai perangkat utama
+                    await setDoc(deviceRef, { deviceId: localId, registeredAt: new Date() });
                 }
 
-                // 5. Configuration & Generation
-                const opt = {
-                    margin: [10, 10, 10, 10], // Top, Left, Bottom, Right
-                    filename: `Laporan-Audit-${currentAnalysisData.keyword.replace(/\s+/g, '-')}.pdf`,
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, useCORS: true },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
+                if (!currentGeminiKey) {
+                    loginSection.classList.add('hidden');
+                    apiKeySection.classList.remove('hidden');
+                    mainDashboard.classList.add('hidden');
+                } else {
+                    loginSection.classList.add('hidden');
+                    apiKeySection.classList.add('hidden');
+                    mainDashboard.classList.remove('hidden');
+                    mainDashboard.classList.add('fade-in');
+                }
+            } catch (err) {
+                notify("Kesalahan sistem keamanan.");
+                signOut(auth);
+            }
+        }
 
-                // Generate from the hidden template
-                html2pdf().set(opt).from(template).save();
-            };
+        onAuthStateChanged(auth, updateUIRoute);
+
+        // LOGIN HANDLER
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
+            const btn = document.getElementById('loginBtn');
+            btn.disabled = true;
+            btn.innerHTML = "Otorisasi Identitas...";
+
+            try {
+                await setPersistence(auth, browserSessionPersistence);
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                notify("Login Gagal: Kredensial tidak valid.");
+                btn.disabled = false;
+                btn.innerHTML = "Masuk ke Command Center";
+            }
         });
+
+        // ACTION HANDLERS
+        document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+        document.getElementById('cancelAccessBtn').addEventListener('click', () => signOut(auth));
+        document.getElementById('resetApiBtn').addEventListener('click', () => {
+            sessionStorage.removeItem('gemini_api_key');
+            location.reload();
+        });
+
+        document.getElementById('validateBtn').addEventListener('click', async () => {
+            const key = document.getElementById('apiInput').value.trim();
+            if (!key) return notify("Masukkan API Key.");
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${key}`);
+                const data = await res.json();
+                if (data.models) {
+                    currentGeminiKey = key;
+                    sessionStorage.setItem('gemini_api_key', key);
+                    updateUIRoute(auth.currentUser);
+                } else throw new Error();
+            } catch { notify("API Key Tidak Valid."); }
+        });
+
+        // ANALYSIS ENGINE
+        document.getElementById('analyzeBtn').addEventListener('click', async () => {
+            const url = document.getElementById('urlInput').value;
+            const comp = document.getElementById('compInput').value;
+            const target = document.getElementById('targetText').value;
+            if (!url || !comp || !target) return notify("Lengkapi Data.");
+
+            const btn = document.getElementById('analyzeBtn');
+            btn.disabled = true;
+            document.getElementById('placeholderUI').classList.add('hidden');
+            document.getElementById('resultUI').classList.remove('hidden');
+            document.getElementById('aiResponseContent').innerHTML = "Menganalisis 'Jiwa Bisnis' Boss...";
+
+            try {
+                const prompt = `BEDAH DOMINASI: Brand (${url}) VS Lawan (${comp}). DETAIL INTELIJEN: ${target}. Berikan Masterplan 10 Pilar dengan pendekatan Deep Investigation seperti kasus Almaz Fried Chicken.`;
+                
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${currentGeminiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        systemInstruction: { parts: [{ text: `Anda spesialis SEO 2026 elit. Gunakan prinsip JANGAN PELIT ILMU. Sertakan contoh konkret. Sapa "Boss". Format HTML.` }] }
+                    })
+                });
+                
+                const data = await res.json();
+                document.getElementById('aiResponseContent').innerHTML = data.candidates[0].content.parts[0].text;
+                
+                // Metrics Simulation
+                document.getElementById('m1').innerText = "88%";
+                document.getElementById('m2').innerText = "9.2";
+                document.getElementById('m3').innerText = "8.5";
+                document.getElementById('barBrand').style.width = "75%";
+                document.getElementById('barComp').style.width = "40%";
+            } catch { notify("Gagal memuat strategi."); } finally { btn.disabled = false; }
+        });
+
+        function notify(msg) {
+            toast.innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 4000);
+        }
     </script>
 </body>
 </html>
-```
-```eof
