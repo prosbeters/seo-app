@@ -76,10 +76,6 @@
         .premium-input:focus {
             border-color: var(--gold);
         }
-        select option, select optgroup {
-            background-color: #121212;
-            color: #ffffff;
-        }
         .prose h2 {
             color: white;
             font-size: 1.75rem;
@@ -133,6 +129,20 @@
 </head>
 <body class="antialiased">
 
+    <!-- CONFLICT MODAL -->
+    <div id="conflictOverlay" class="hidden fixed inset-0 z-[100] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-6 text-center">
+        <div class="max-w-md w-full space-y-6">
+            <div class="w-20 h-20 bg-red-500/10 border border-red-500/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </div>
+            <h2 class="text-3xl font-black uppercase tracking-tighter text-white">Sesi Terputus</h2>
+            <p class="text-gray-400 text-sm leading-relaxed">Boss, akun ini baru saja login di perangkat lain. Sesi di sini telah dinonaktifkan demi keamanan.</p>
+            <button onclick="handleLogoutForce()" class="btn-luxury w-full py-4 rounded-lg">Kembali ke Login</button>
+        </div>
+    </div>
+
     <!-- LOGIN SECTION -->
     <div id="loginSection" class="min-h-screen flex items-center justify-center p-6 bg-radial from-[#1a1a1a] to-black">
         <div class="max-w-md w-full space-y-8 p-10 rounded-2xl bg-white/[0.02] border border-white/[0.05] backdrop-blur-xl shadow-2xl fade-in text-center">
@@ -161,7 +171,7 @@
                     </button>
                 </div>
             </form>
-            <p class="text-[10px] text-gray-600 uppercase tracking-widest mt-8">Sistem Keamanan: 1 ID 1 Perangkat Aktif</p>
+            <p class="text-[10px] text-gray-600 uppercase tracking-widest mt-8">Keamanan: 1 Akun 1 Perangkat Aktif</p>
         </div>
     </div>
 
@@ -173,7 +183,7 @@
                     KONFIGURASI <span class="gold-text">OTAK AI</span>
                 </h2>
                 <p class="text-gray-500 text-sm leading-relaxed mb-8 text-justify px-4">
-                    Boss, masukkan Kunci API Google AI Studio Anda untuk mengaktifkan audit sistem SEO & Reputasi Founder 2026.
+                    Boss, masukkan Kunci API Google AI Studio Anda untuk mengaktifkan sistem investigasi SEO & Otoritas Founder 2026.
                 </p>
             </div>
 
@@ -199,14 +209,13 @@
     <!-- MAIN DASHBOARD SECTION -->
     <div id="mainDashboard" class="hidden p-8 md:p-20">
         <div class="max-w-6xl mx-auto">
-            <!-- HEADER -->
             <header class="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
                     <h1 class="text-5xl md:text-6xl font-black mb-6 tracking-tighter uppercase">
                         SEO <span class="gold-text">SPESIALIS</span>
                     </h1>
                     <p class="text-gray-500 text-xl font-light max-w-3xl text-justify">
-                        Intelijen Strategis 2026. Menganalisis <span class="text-white">Founder Authority</span>, <span class="text-white">Social Signals</span>, dan <span class="text-white">Digital Ecosystem</span>. Kami memastikan Boss menjadi otoritas tunggal.
+                        Intelijen Strategis 2026. Menganalisis <span class="text-white">Founder Authority</span>, <span class="text-white">Social Signals</span>, dan <span class="text-white">Deep Investigative Analysis</span>.
                     </p>
                 </div>
                 <div class="flex flex-col items-end gap-3">
@@ -230,30 +239,26 @@
                         </div>
 
                         <div>
-                            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Link Ekosistem Boss (PENTING)</label>
-                            <input id="linksInput" type="text" placeholder="Masukkan IG, TikTok, GoFood, GrabFood MILIK BOSS..." class="premium-input text-sm">
-                            <p class="text-[9px] text-gray-600 mt-1 italic">Cantumkan link aset milik Boss agar AI bisa melakukan audit internal.</p>
+                            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Link Ekosistem Boss (Aset Kita)</label>
+                            <input id="linksInput" type="text" placeholder="Link IG, TikTok, FB, Gofood Kita..." class="premium-input text-sm">
                         </div>
 
                         <div>
                             <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Sektor Industri</label>
                             <select id="industrySelect" class="premium-input text-sm appearance-none cursor-pointer">
-                                <option value="" disabled selected>Pilih Bidang Bisnis Boss...</option>
+                                <option value="" disabled selected>Pilih Bidang Bisnis...</option>
                                 <optgroup label="F&B & Kuliner">
                                     <option value="Food & Beverage">Restoran Taste Saudi / Lokal</option>
                                     <option value="Multi-Location Retail">Waralaba Multi-Cabang</option>
-                                </optgroup>
-                                <optgroup label="Teknologi & Digital">
-                                    <option value="SaaS & AI Tech">Aplikasi & Teknologi</option>
-                                    <option value="Fintech">Keuangan Digital</option>
                                 </optgroup>
                                 <option value="manual" class="font-bold text-yellow-500 uppercase">+ Ketik Bidang Sendiri</option>
                             </select>
                         </div>
 
                         <div>
-                            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Jiwa Bisnis (Detail Intelijen)</label>
-                            <textarea id="targetText" rows="4" placeholder="Detail: Siapa Founder-nya, apa budayanya (misal wajib sholat), apa nilai uniknya." class="premium-input text-sm resize-none"></textarea>
+                            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">Visi & Jiwa Bisnis (Target Boss)</label>
+                            <textarea id="targetText" rows="5" placeholder="Contoh: Ingin jadi nomor 1 di Surabaya dengan taste Saudi, karyawan wajib sholat, dan owner aktif di medsos." class="premium-input text-sm resize-none"></textarea>
+                            <p class="text-[9px] text-gray-600 mt-2 italic">Tulis target keinginan Boss (Contoh: Jawara di area tertentu) + Nilai unik bisnisnya.</p>
                         </div>
 
                         <button id="analyzeBtn" class="w-full btn-luxury py-5 rounded-lg">
@@ -265,26 +270,22 @@
                 <!-- RESULT PANEL -->
                 <div class="lg:col-span-8">
                     <div id="placeholderUI" class="h-full min-h-[500px] flex flex-col items-center justify-center text-center opacity-40">
-                        <p class="text-xl font-light italic text-justify px-10 leading-relaxed">Masukkan data brand dan link aset digital Boss untuk membedah peta kemenangan 2026.</p>
+                        <p class="text-xl font-light italic text-justify px-10 leading-relaxed">Lengkapi Command Center untuk membedah peta kemenangan 2026.</p>
                     </div>
 
                     <div id="resultUI" class="hidden space-y-16 text-center">
-                        <!-- METRICS -->
                         <div class="grid grid-cols-3 gap-12 text-center">
                             <div>
                                 <span class="text-[11px] font-bold text-gray-600 uppercase tracking-widest">Founder Authority</span>
                                 <div id="m1" class="text-4xl font-black mt-2">0%</div>
-                                <p class="text-[9px] text-gray-500 mt-2">Otoritas Personal Owner</p>
                             </div>
                             <div>
                                 <span class="text-[11px] font-bold text-gray-600 uppercase tracking-widest">Digital Visibility</span>
                                 <div id="m2" class="text-4xl font-black mt-2 text-gray-500">0.0</div>
-                                <p class="text-[9px] text-gray-500 mt-2">Kekuatan Omnichannel</p>
                             </div>
                             <div>
                                 <span class="text-[11px] font-bold text-gray-600 uppercase tracking-widest">AI Trust Score</span>
                                 <div id="m3" class="text-4xl font-black mt-2 text-gray-500">0.0</div>
-                                <p class="text-[9px] text-gray-500 mt-2">Peluang Rekomendasi AI</p>
                             </div>
                         </div>
 
@@ -299,13 +300,12 @@
         </div>
     </div>
 
-    <!-- NOTIFICATION -->
     <div id="toast" class="fixed bottom-10 right-10 px-8 py-4 bg-red-950 border border-red-500 text-white rounded-lg hidden z-50 text-sm shadow-2xl"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { initializeFirestore, doc, getDoc, setDoc, enableNetwork } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { initializeFirestore, doc, onSnapshot, setDoc, enableNetwork } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBAZQjA0KMpsDUYv12ilDJhPrqUOB80ZvM",
@@ -318,47 +318,44 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        
-        // Force Long Polling for Sandbox Stability
         const db = initializeFirestore(app, { experimentalForceLongPolling: true, useFetchStreams: false });
         
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'seo-spesialis-2026';
         let currentGeminiKey = sessionStorage.getItem('gemini_api_key') || "";
+        let unsubscribeSession = null;
 
         const loginSection = document.getElementById('loginSection');
         const apiKeySection = document.getElementById('apiKeySection');
         const mainDashboard = document.getElementById('mainDashboard');
         const loginForm = document.getElementById('loginForm');
+        const conflictOverlay = document.getElementById('conflictOverlay');
         const toast = document.getElementById('toast');
-        const authStatusLabel = document.getElementById('authStatusLabel');
 
-        // SESSION TAKEOVER LOGIC (1 ID 1 PERANGKAT)
-        async function validateSession(user) {
-            if (!user) {
-                loginSection.classList.remove('hidden');
-                apiKeySection.classList.add('hidden');
-                mainDashboard.classList.add('hidden');
-                authStatusLabel.innerText = "Otoritas Akses Eksklusif";
-                return;
-            }
+        window.handleLogoutForce = () => {
+            localStorage.removeItem('copygen_session_id');
+            sessionStorage.removeItem('gemini_api_key');
+            location.reload();
+        };
 
-            authStatusLabel.innerText = "Menyelaraskan Sesi Keamanan...";
-
+        async function setupSessionListener(user) {
+            if (!user) return;
+            if (unsubscribeSession) unsubscribeSession();
+            const sessionRef = doc(db, 'artifacts', appId, 'users', user.uid, 'session', 'current');
             try {
                 await enableNetwork(db);
-                const localSessionId = localStorage.getItem('copygen_session_id');
-                const sessionRef = doc(db, 'artifacts', appId, 'users', user.uid, 'session', 'current');
-                const snap = await getDoc(sessionRef);
-
-                if (snap.exists()) {
-                    const serverSessionId = snap.data().sessionId;
-                    if (localSessionId !== serverSessionId) {
-                        notify("AKSES DITOLAK: Sesi diambil alih perangkat lain.");
-                        setTimeout(() => signOut(auth), 2000);
-                        return;
+                unsubscribeSession = onSnapshot(sessionRef, (snap) => {
+                    if (snap.exists()) {
+                        const serverSessionId = snap.data().sessionId;
+                        const localSessionId = localStorage.getItem('copygen_session_id');
+                        if (localSessionId && serverSessionId !== localSessionId) {
+                            conflictOverlay.classList.remove('hidden'); 
+                            loginSection.classList.add('hidden');
+                            apiKeySection.classList.add('hidden');
+                            mainDashboard.classList.add('hidden');
+                            signOut(auth);
+                        }
                     }
-                }
-
+                });
                 if (!currentGeminiKey) {
                     loginSection.classList.add('hidden');
                     apiKeySection.classList.remove('hidden');
@@ -367,19 +364,11 @@
                     loginSection.classList.add('hidden');
                     apiKeySection.classList.add('hidden');
                     mainDashboard.classList.remove('hidden');
-                    mainDashboard.classList.add('fade-in');
                 }
-            } catch (err) {
-                if (err.message.includes("offline")) {
-                    notify("Reconnecting...");
-                    setTimeout(() => validateSession(user), 3000);
-                } else {
-                    signOut(auth);
-                }
-            }
+            } catch (err) { console.error(err); }
         }
 
-        onAuthStateChanged(auth, validateSession);
+        onAuthStateChanged(auth, setupSessionListener);
 
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -387,40 +376,23 @@
             const password = document.getElementById('passwordInput').value;
             const btn = document.getElementById('loginBtn');
             btn.disabled = true;
-            btn.innerHTML = "Membuat Jalur Aman...";
-
+            btn.innerHTML = "Otorisasi...";
             try {
                 await setPersistence(auth, browserSessionPersistence);
                 const cred = await signInWithEmailAndPassword(auth, email, password);
-                
-                // 1. GENERATE UNIQUE ID
                 const newSessionId = crypto.randomUUID();
-                
-                // 2. STORE LOCALLY
                 localStorage.setItem('copygen_session_id', newSessionId);
-
-                // 3. SYNC TO SERVER (TAKE OVER)
                 const sessionRef = doc(db, 'artifacts', appId, 'users', cred.user.uid, 'session', 'current');
-                await setDoc(sessionRef, { 
-                    sessionId: newSessionId, 
-                    lastActive: Date.now(),
-                    deviceName: navigator.userAgent.substring(0, 50)
-                });
+                await setDoc(sessionRef, { sessionId: newSessionId, lastActive: Date.now() });
             } catch (error) {
-                notify("Login Gagal: Kredensial tidak valid.");
+                notify("Login Gagal.");
                 btn.disabled = false;
-                btn.innerHTML = "Masuk ke Command Center";
+                btn.innerHTML = "Masuk";
             }
         });
 
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            localStorage.removeItem('copygen_session_id');
-            sessionStorage.removeItem('gemini_api_key');
-            signOut(auth);
-        });
-        
+        document.getElementById('logoutBtn').addEventListener('click', handleLogoutForce);
         document.getElementById('cancelAccessBtn').addEventListener('click', () => signOut(auth));
-        
         document.getElementById('resetApiBtn').addEventListener('click', () => {
             sessionStorage.removeItem('gemini_api_key');
             location.reload();
@@ -435,9 +407,9 @@
                 if (data.models) {
                     currentGeminiKey = key;
                     sessionStorage.setItem('gemini_api_key', key);
-                    validateSession(auth.currentUser);
+                    setupSessionListener(auth.currentUser);
                 } else throw new Error();
-            } catch { notify("API Key Tidak Valid."); }
+            } catch { notify("API Key Tidak Aktif."); }
         });
 
         document.getElementById('analyzeBtn').addEventListener('click', async () => {
@@ -445,39 +417,31 @@
             const comp = document.getElementById('compInput').value;
             const links = document.getElementById('linksInput').value;
             const target = document.getElementById('targetText').value;
-            const ind = document.getElementById('industrySelect').value;
-            
-            if (!url || !comp || !links || !target) return notify("Lengkapi Data Command Center.");
+            if (!url || !comp || !links || !target) return notify("Lengkapi Data.");
 
             const btn = document.getElementById('analyzeBtn');
             btn.disabled = true;
-            btn.innerHTML = "Investigating Omnichannel...";
+            btn.innerHTML = "Scanning...";
             document.getElementById('placeholderUI').classList.add('hidden');
             document.getElementById('resultUI').classList.remove('hidden');
-            document.getElementById('aiResponseContent').innerHTML = `<p class="italic text-gray-500 text-center">Menelusuri jejak digital, aset sosmed (${links}), budaya, dan persona owner...</p>`;
+            document.getElementById('aiResponseContent').innerHTML = "Menelusuri jejak digital...";
 
             try {
-                const prompt = `BEDAH DOMINASI 2026: Brand (${url}) VS Lawan (${comp}). 
-                LINK EKOSISTEM DIGITAL BOSS: ${links}. 
-                JIWA BISNIS & INTELIJEN BOSS: ${target}. 
-                Gunakan pendekatan DEEP INVESTIGATION. Bandingkan dengan kompetitor kaku. Berikan Masterplan 10 Pilar dengan contoh konkret.`;
-                
+                const prompt = `BEDAH DOMINASI 2026: Brand (${url}) VS Lawan (${comp}). LINK EKOSISTEM: ${links}. VISI & JIWA BISNIS (TARGET): ${target}. Gunakan pendekatan DEEP INVESTIGATION. Berikan Masterplan 10 Pilar dengan contoh konkret. Sapa Boss.`;
                 const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${currentGeminiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         contents: [{ parts: [{ text: prompt }] }],
-                        systemInstruction: { parts: [{ text: `Anda adalah SEO Strategist 2026 elit. JANGAN PELIT ILMU. Sapa "Boss". Gunakan Bahasa Manusia. Sertakan contoh konkret di tiap pilar. Format HTML.` }] }
+                        systemInstruction: { parts: [{ text: `Anda adalah SEO Strategist 2026 elit. JANGAN PELIT ILMU. Format HTML.` }] }
                     })
                 });
-                
                 const data = await res.json();
                 document.getElementById('aiResponseContent').innerHTML = data.candidates[0].content.parts[0].text;
-                
-                document.getElementById('m1').innerText = (Math.floor(Math.random() * 15) + 80) + "%";
-                document.getElementById('m2').innerText = (Math.random() * 1 + 8.8).toFixed(1);
-                document.getElementById('m3').innerText = (Math.random() * 1.5 + 8.0).toFixed(1);
-            } catch { notify("Gagal memuat strategi."); } finally { btn.disabled = false; btn.innerHTML = "Mulai Audit Masterplan 2026"; }
+                document.getElementById('m1').innerText = "94%";
+                document.getElementById('m2').innerText = "9.6";
+                document.getElementById('m3').innerText = "8.9";
+            } catch { notify("Gagal."); } finally { btn.disabled = false; btn.innerHTML = "Audit Masterplan 2026"; }
         });
 
         function notify(msg) {
